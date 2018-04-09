@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="27dp"
+
+        android:layout_marginEnd="255dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
+        android:text="Check attendance"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TableLayout
+        android:layout_width="368dp"
+        android:layout_height="438dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:ignore="MissingConstraints">
+
+        <TableRow>
+
+            <TextView
+                android:paddingLeft="25dp"
+                android:text="SUBJECTS" />
+
+            <TextView
+                android:paddingLeft="100dp"
+                android:text="ATTENDANCE %" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:paddingLeft="25dp"
+                android:text="M401" />
+
+            <TextView
+                android:id="@+id/m401"
+                android:paddingLeft="100dp"
+                android:text="45" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:paddingLeft="25dp"
+                android:text="CS401" />
+
+            <TextView
+                android:id="@+id/cs401"
+                android:paddingLeft="100dp"
+                android:text="45" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:paddingLeft="25dp"
+                android:text="CS402" />
+
+            <TextView
+                android:id="@+id/cs402"
+                android:paddingLeft="100dp"
+                android:text="45" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:paddingLeft="25dp"
+                android:text="CS403" />
+
+            <TextView
+                android:id="@+id/cs403"
+                android:paddingLeft="100dp"
+                android:text="45" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:paddingLeft="25dp"
+                android:text="MCS401" />
+
+            <TextView
+                android:id="@+id/mcs401"
+                android:paddingLeft="100dp"
+                android:text="45" />
+        </TableRow>
+
+    </TableLayout>
+
+</android.support.constraint.ConstraintLayout>
