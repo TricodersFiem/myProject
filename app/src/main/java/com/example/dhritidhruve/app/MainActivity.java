@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
+        boolean next = false;
         Log.i("tag","hello world");
         EditText email = (EditText) findViewById(R.id.email);
         EditText pass = (EditText) findViewById(R.id.password);
