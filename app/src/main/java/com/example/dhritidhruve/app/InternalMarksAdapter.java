@@ -22,7 +22,7 @@ public class InternalMarksAdapter extends ArrayAdapter<InternalMarksDesign> {
     ArrayList<InternalMarksDesign> item;
 
 
-    public InternalMarksAdapter(thirdfragment context, ArrayList<InternalMarksDesign> item){
+    public InternalMarksAdapter(Context context, ArrayList<InternalMarksDesign> item){
 
         super(context, 0, item);
         this.context = context;

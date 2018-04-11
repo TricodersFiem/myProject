@@ -1,5 +1,6 @@
 package com.example.dhritidhruve.app;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,12 +27,12 @@ public class thirdfragment extends Fragment {
         ArrayList<InternalMarksDesign> internalMarks = new ArrayList<InternalMarksDesign>();
         internalMarks.add(new InternalMarksDesign("Abhisekh", "2"));
         internalMarks.add(new InternalMarksDesign("Riya", "4"));
+        InternalMarksAdapter marksAdapter = new InternalMarksAdapter(getActivity(), internalMarks);
 
-        InternalMarksAdapter marksAdapter = new InternalMarksAdapter(this, internalMarks);
 
-
-       ListView listView = (ListView) getActivity().findViewById(R.id.list_view);
+       ListView listView = (ListView) view.findViewById(R.id.list_view);
         listView.setAdapter(marksAdapter);
+        return view;
     }
 }
 
