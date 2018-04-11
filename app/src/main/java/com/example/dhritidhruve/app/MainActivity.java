@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-
+        Log.i("tag","hello world");
         EditText email = (EditText) findViewById(R.id.email);
         EditText pass = (EditText) findViewById(R.id.password);
         mAuth.signInWithEmailAndPassword(email.getText().toString(), pass.getText().toString());
