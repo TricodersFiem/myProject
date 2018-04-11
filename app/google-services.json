@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "276123285959",
+    "firebase_url": "https://myproject-63453.firebaseio.com",
+    "project_id": "myproject-63453",
+    "storage_bucket": "myproject-63453.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:276123285959:android:db56791dde2cfcbb",
+        "android_client_info": {
+          "package_name": "com.example.dhritidhruve.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "276123285959-550ssqsf99a1odnbv8k3o4rri5uahcrf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dhritidhruve.app",
+            "certificate_hash": "8aa39ecf437620bc4565a6d9b9dd5935d8e0e8ea"
+          }
+        },
+        {
+          "client_id": "276123285959-ueb1e9lp91c1dkil1q2tqo536k27uqg7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmnKClnnRt1XzSqBYmq1WmlmH1RWstO8g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "276123285959-ueb1e9lp91c1dkil1q2tqo536k27uqg7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
