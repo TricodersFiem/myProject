@@ -63,13 +63,15 @@
             android:inputType="textPersonName" />
 
         <Button
+            android:layout_gravity="center_horizontal"
             android:id="@+id/signup"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="register1"
-            android:text="Register" />
-
+            android:text="Register"
+            />
 
     </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>

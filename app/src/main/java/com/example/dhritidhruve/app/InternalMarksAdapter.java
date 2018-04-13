@@ -1,4 +1,5 @@
 package com.example.dhritidhruve.app;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -18,11 +19,11 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 public class InternalMarksAdapter extends ArrayAdapter<InternalMarksDesign> {
-    Context context;
-    ArrayList<InternalMarksDesign> item;
+    private Context context;
+    private ArrayList<InternalMarksDesign> item;
 
 
-    public InternalMarksAdapter(Context context, ArrayList<InternalMarksDesign> item){
+    InternalMarksAdapter(Context context, ArrayList<InternalMarksDesign> item){
 
         super(context, 0, item);
         this.context = context;
@@ -36,6 +37,7 @@ public class InternalMarksAdapter extends ArrayAdapter<InternalMarksDesign> {
         InternalMarksDesign internalMarks;
     }
 
+    @SuppressLint("ViewHolder")
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
