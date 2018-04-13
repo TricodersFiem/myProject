@@ -32,7 +32,7 @@ public class register extends AppCompatActivity {
         user.put("roll",roll.getText().toString());
         user.put("department",department.getText().toString());
         db.collection("users")
-                .document("1")
+                .document(roll.getText().toString())
                 .set(user);
 
         mAuth.createUserWithEmailAndPassword(email.getText().toString(), pass.getText().toString());

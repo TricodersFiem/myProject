@@ -15,22 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "276123285959-vnn2isn6l66k60u4lnfai3a8jkp4n3ud.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.dhritidhruve.app",
-            "certificate_hash": "9c6431dae97ac2459c0840d0443e43358b3ca7f9"
-          }
-        },
-        {
-          "client_id": "276123285959-q1ieumb7her7r4kue406pjmcpp5rbpqo.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.dhritidhruve.app",
-            "certificate_hash": "643733331aaff05c4e973198eae0ae8a24aa9e58"
-          }
-        },
-        {
           "client_id": "276123285959-550ssqsf99a1odnbv8k3o4rri5uahcrf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
