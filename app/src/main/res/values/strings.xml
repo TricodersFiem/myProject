@@ -13,4 +13,13 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_attendanceyear">attendanceyear</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string-array name="TYPE">
+        <item>USER TYPE</item>
+        <item>STUDENT</item>
+        <item>STAFF</item>
+
+    </string-array>
+
 </resources>
