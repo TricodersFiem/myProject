@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 public class attendanceyear extends Fragment{
     private AppBarLayout appBar;
     private TabLayout tabs;
-
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.attendanceyear, container, false);
@@ -27,7 +26,6 @@ public class attendanceyear extends Fragment{
         View contenedor = (View)container.getParent();
         appBar = (AppBarLayout)contenedor.findViewById(R.id.appbar);
         tabs = new TabLayout(getActivity());
-     //   tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabs.setTabTextColors(Color.parseColor("#FFFFFF"), Color.parseColor("#FFFFFF"));
         appBar.addView(tabs);
 
@@ -55,15 +53,15 @@ public class attendanceyear extends Fragment{
             switch (position) {
                 case 0:return new firstyear();
                 case 1:return new secondyear();
-                case 2:return new thirdyear();
-                case 3:return new fourthyear();
+                case 2: return new thirdyear();
+                case 3: return new fourthyear();
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
 
         @Override

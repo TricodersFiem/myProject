@@ -1,5 +1,7 @@
 package com.example.dhritidhruve.app;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -32,7 +34,7 @@ public class firstyear extends Fragment {
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity(),secondfragment.class);
+                Intent intent = new Intent(getActivity(),giveattendance.class);
                 startActivity(intent);
             }
         });
@@ -48,6 +50,15 @@ public class firstyear extends Fragment {
 
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
 }
 
 

@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 public class internalyear extends Fragment{
     private AppBarLayout appBar;
     private TabLayout tabs;
-
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.internalyear, container, false);
@@ -45,22 +44,25 @@ public class internalyear extends Fragment{
             super(fragmentManager);
         }
 
-        String[] tabnames = {"1st year", "2nd year", "3rd year", "4th year" };
+        String[] tabnames = {"1st", "2nd", "3rd", "4th"};
 
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-                case 0:return new firstyear();
-                case 1:return new secondyear();
-                case 2:return new thirdyear();
-                case 3:return new fourthyear();
+                case 0: return new firstyearinternal();
+                case 1: return new secondyearinternal();
+                case 2: return new thirdyearinternal();
+                case 3: return new fourthyearinternal();
             }
-            return null;
-        }
+
+                return null;
+            }
+
+
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
 
         @Override

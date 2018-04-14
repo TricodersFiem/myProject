@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * Created by Dhriti Dhruve on 05-04-2018.
  */
 
-public class secondfragment extends Fragment{
+public class giveattendance extends Fragment{
     View view;
     @Nullable
     @Override

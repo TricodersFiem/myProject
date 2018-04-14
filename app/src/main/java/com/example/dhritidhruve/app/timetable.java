@@ -11,7 +11,7 @@ import android.view.ViewGroup;
  * Created by Dhriti Dhruve on 05-04-2018.
  */
 
-public class Firstfragment extends Fragment{
+public class timetable extends Fragment{
 
 
 

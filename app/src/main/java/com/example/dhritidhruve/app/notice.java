@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class fourthfragment extends Fragment {
+public class notice extends Fragment {
 
     private AppBarLayout appBar;
     private TabLayout tabs;
@@ -48,7 +48,7 @@ public class fourthfragment extends Fragment {
             String[] tabnames = {"Xplorica", "Culrav", "Sportivo", "Academic" };
 
             @Override
-            public android.support.v4.app.Fragment getItem(int position) {
+            public Fragment getItem(int position) {
                 switch (position) {
                     case 0:return new xplorica();
                     case 1:return new culrav();
@@ -60,7 +60,7 @@ public class fourthfragment extends Fragment {
 
             @Override
             public int getCount() {
-                return 3;
+                return 4;
             }
 
             @Override

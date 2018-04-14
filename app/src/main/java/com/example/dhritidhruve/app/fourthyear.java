@@ -32,7 +32,7 @@ public class fourthyear extends Fragment {
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity(),secondfragment.class);
+                Intent intent = new Intent(getActivity(),giveattendance.class);
                 startActivity(intent);
             }
         });

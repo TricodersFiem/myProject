@@ -33,21 +33,13 @@ public class user extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     //FirebaseFirestore db;
    // private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-       /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-       */
       //  FirebaseUser user = mAuth.getCurrentUser();
        // db = FirebaseFirestore.getInstance();
        /* DocumentReference docRef = db.collection("users").document(user.roll);
@@ -132,7 +124,7 @@ public class user extends AppCompatActivity
 
         if (id == R.id.nav_timetable) {
             fragmentManager.beginTransaction()
-                    .replace(R.id.contenedor,new Firstfragment())
+                    .replace(R.id.contenedor,new timetable())
                     .commit();
             // Handle the camera action
         } else if (id == R.id.nav_attendance) {
@@ -141,13 +133,14 @@ public class user extends AppCompatActivity
                     .commit();
 
         } else if (id == R.id.nav_internalmarks) {
+
             fragmentManager.beginTransaction()
                     .replace(R.id.contenedor,new internalyear())
                     .commit();
 
         } else if (id == R.id.nav_notice) {
             fragmentManager.beginTransaction()
-                    .replace(R.id.contenedor,new fourthfragment())
+                    .replace(R.id.contenedor,new notice())
                     .commit();
 
         }

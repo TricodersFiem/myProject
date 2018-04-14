@@ -1,6 +1,5 @@
 package com.example.dhritidhruve.app;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,13 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Dhriti Dhruve on 05-04-2018.
  */
 
-public class thirdfragment extends Fragment {
+public class giveinternalmarks extends Fragment {
     View view;
     @Nullable
     @Override
