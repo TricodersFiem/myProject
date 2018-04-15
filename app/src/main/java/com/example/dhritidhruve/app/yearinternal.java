@@ -1,5 +1,7 @@
 package com.example.dhritidhruve.app;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,7 +15,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class fourthyearinternal extends Fragment {
+public class yearinternal extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
@@ -37,17 +39,26 @@ public class fourthyearinternal extends Fragment {
         });
     }
 
-        View view;
-        @Nullable
-        @Override
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    View view;
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-            view = inflater.inflate(R.layout.fourthyear, container, false);
-            return view;
+        view= inflater.inflate(R.layout.yearattendance,container,false);
+        return view;
 
-        }
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
 }
-
 
 
 

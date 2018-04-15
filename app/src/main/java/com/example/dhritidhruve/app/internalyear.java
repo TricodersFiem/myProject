@@ -18,7 +18,7 @@ public class internalyear extends Fragment{
     private TabLayout tabs;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.internalyear, container, false);
+        View view = inflater.inflate(R.layout.attendanceyear, container, false);
 
         assert container != null;
         View contenedor = (View)container.getParent();
@@ -49,10 +49,10 @@ public class internalyear extends Fragment{
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-                case 0: return new firstyearinternal();
-                case 1: return new secondyearinternal();
-                case 2: return new thirdyearinternal();
-                case 3: return new fourthyearinternal();
+                case 0: return new yearinternal();
+                case 1: return new yearinternal();
+                case 2: return new yearinternal();
+                case 3: return new yearinternal();
             }
 
                 return null;

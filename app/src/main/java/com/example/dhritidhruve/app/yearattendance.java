@@ -1,5 +1,7 @@
 package com.example.dhritidhruve.app;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,7 +15,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class firstyearinternal extends Fragment {
+public class yearattendance extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
@@ -31,7 +33,7 @@ public class firstyearinternal extends Fragment {
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity(),giveinternalmarks.class);
+                Intent intent = new Intent(getActivity(),giveattendance.class);
                 startActivity(intent);
             }
         });
@@ -42,11 +44,20 @@ public class firstyearinternal extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-        view= inflater.inflate(R.layout.firstyear,container,false);
+        view= inflater.inflate(R.layout.yearattendance,container,false);
         return view;
 
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
 }
 
 

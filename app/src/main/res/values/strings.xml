@@ -15,11 +15,29 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_attendanceyear">attendanceyear</string>
     <string name="section_format">Hello World from section: %1$d</string>
-    <string-array name="TYPE">
+    <string-array name="USERTYPE">
         <item>USER TYPE</item>
         <item>STUDENT</item>
         <item>STAFF</item>
 
+    </string-array>
+    <string-array name="YEAR">
+        <item>SELECT YEAR</item>
+        <item>1ST</item>
+        <item>2ND</item>
+        <item>3RD</item>
+        <item>4TH</item>
+
+    </string-array>
+    <string-array name="DEPARTMENT">
+        <item>DEPARTMENT</item>
+        <item>CSE</item>
+        <item>ECE</item>
+        <item>EE</item>
+        <item>ME</item>
+        <item>IT</item>
+        <item>AEIE</item>
+        <item>BSH</item>
     </string-array>
 
 </resources>

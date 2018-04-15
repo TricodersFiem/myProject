@@ -11,12 +11,12 @@
 
         android:id="@+id/linearlayout2"
         android:layout_width="match_parent"
-        android:layout_height="492dp"
-        android:layout_marginTop="80dp"
+        android:layout_height="381dp"
+        android:layout_marginTop="16dp"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp">
 
         <LinearLayout
             android:id="@+id/linearlayout"
@@ -73,6 +73,23 @@
             android:layout_height="wrap_content"
             android:descendantFocusability="beforeDescendants"
             android:padding="10dp" />
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/submitmarks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="38dp"
+        android:layout_marginEnd="186dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="28dp"
+        android:text="SUBMIT MARKS"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearlayout2"
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>

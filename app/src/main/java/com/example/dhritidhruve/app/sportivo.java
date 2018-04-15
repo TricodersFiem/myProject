@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class sportivo extends Fragment {
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         ListView listView = (ListView) getView().findViewById(R.id.list1);
         final ArrayList<String> arrayList = new ArrayList<String>();
@@ -32,16 +32,16 @@ public class sportivo extends Fragment {
         });
     }
 
-    View view;
+        View view;
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+            view= inflater.inflate(R.layout.sportivo,container,false);
+            return view;
 
-        view = inflater.inflate(R.layout.sportivo, container, false);
-        return view;
-
-    }
-
+        }
 }
+
+
 

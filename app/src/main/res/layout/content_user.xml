@@ -20,37 +20,83 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="501dp">
 
-        <ListView
-            android:id="@+id/userlist"
-            android:layout_width="152dp"
-            android:layout_height="311dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="187dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <ListView
-            android:id="@+id/userhead"
-            android:layout_width="208dp"
-            android:layout_height="303dp"
+        <ImageView
+            android:id="@+id/userpic"
+            android:layout_width="117dp"
+            android:layout_height="127dp"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginEnd="156dp"
+            android:layout_marginStart="156dp"
+            android:layout_marginTop="68dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.488"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.043"
+            app:srcCompat="@android:drawable/sym_def_app_icon" />
+
+        <LinearLayout
+            android:layout_width="309dp"
+            android:layout_height="170dp"
+            android:layout_marginBottom="90dp"
+            android:layout_marginEnd="37dp"
+            android:layout_marginStart="38dp"
+            android:layout_marginTop="33dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userpic"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name"
+                android:text=""
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/collegeid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="College Id"
+                android:text=""
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/department"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Department"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Year"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/designation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Designation"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/qualification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Qualification"
+                android:visibility="visible" />
+        </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 
 </android.support.design.widget.CoordinatorLayout>

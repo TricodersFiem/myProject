@@ -1,5 +1,6 @@
 package com.example.dhritidhruve.app;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -26,27 +27,25 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    public void register(View view) {
+    private EditText txtEmail, txtPassword;
 
-        Intent intent = new Intent(getApplicationContext(), register.class);
-        startActivity(intent);
-    }
 
-    public void login(View view) {
-        boolean next = false;
-        EditText email = (EditText) findViewById(R.id.email);
-        EditText pass = (EditText) findViewById(R.id.password);
-        mAuth.signInWithEmailAndPassword(email.getText().toString(), pass.getText().toString())
+    public void signIn(View view) {
+        final ProgressDialog progressDialog = ProgressDialog.show(MainActivity.this, "Please wait...", "Processing...", true);
+        mAuth.signInWithEmailAndPassword(txtEmail.getText().toString().trim(), txtPassword.getText().toString().trim())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        progressDialog.dismiss();
                         if (task.isSuccessful()) {
+                            Toast.makeText(MainActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(getApplicationContext(), user.class);
                             startActivity(i);
                             finish();
                             FirebaseUser user = mAuth.getCurrentUser();
                         } else {
-                            Toast.makeText(getApplicationContext(),"WRONG EMAIL OR PASSWORD",
+                            Toast.makeText(getApplicationContext(), task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -55,7 +54,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Sign In");
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
+        txtEmail = (EditText) findViewById(R.id.email);
+        txtPassword = (EditText) findViewById(R.id.password);
+        TextView mSignUp;
+        (mSignUp = (TextView) findViewById(R.id.signUp))
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(), register.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+
     }
 }

@@ -19,7 +19,7 @@ public class notice extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_fourthfragment, container, false);
+        View view = inflater.inflate(R.layout.notice, container, false);
 
         assert container != null;
         View contenedor = (View)container.getParent();

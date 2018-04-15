@@ -17,7 +17,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,48 +33,21 @@ import java.util.ArrayList;
 
 public class user extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    //FirebaseFirestore db;
-   // private FirebaseAuth mAuth;
 
+    TextView name,collegeid,department,qualification,designation,year;
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-      //  FirebaseUser user = mAuth.getCurrentUser();
-       // db = FirebaseFirestore.getInstance();
-       /* DocumentReference docRef = db.collection("users").document(user.roll);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document != null && document.exists()) {
-                        Log.d("TAG", "DocumentSnapshot data: " + document.getData());
-                    } else {
-                        Log.d("TAG", "No such document");
-                    }
-                } else {
-                    Log.d("TAG", "get failed with ", task.getException());
-                }
-            }
-        });
-        ListView userlist=(ListView)findViewById(R.id.userlist);
-        ArrayList<String> userarray= new ArrayList<>();
-       // userarray.add();
-
-        ListView userhead=(ListView) findViewById(R.id.userhead);
-        ArrayList<String> headarray= new ArrayList<String>();
-        headarray.add("NAME");
-        headarray.add("COLLEGE ID");
-        headarray.add("DEPARTMENT");
-        headarray.add("COLLEGE ROLL");
-         ArrayAdapter<String> useradapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,headarray);
-        userhead.setAdapter(useradapter);
-
-        */
-
+        name=(TextView)findViewById(R.id.name);
+        department=(TextView)findViewById(R.id.department);
+        designation=(TextView)findViewById(R.id.designation);
+        qualification=(TextView)findViewById(R.id.qualification);
+        year=(TextView)findViewById(R.id.year);
+        collegeid=(TextView)findViewById(R.id.collegeid);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -109,6 +84,7 @@ public class user extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
             return true;
         }
 

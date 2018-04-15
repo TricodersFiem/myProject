@@ -1,83 +1,67 @@
 package com.example.dhritidhruve.app;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class register extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class register extends AppCompatActivity {
     FirebaseFirestore db;
     private FirebaseAuth mAuth;
-    EditText name,email,pass,department,roll;
-    EditText year,semester,qualification,designation;
-    TextView signin;
-    String usertype;
+    EditText name, email, pass, collegeid;
+    EditText qualification, designation;
+    String username,yearname,departmentname;
 
-    public void signup (View view) {
-
-          name =(EditText) findViewById(R.id.name);
-         email=(EditText) findViewById(R.id.email );
-         pass=(EditText) findViewById(R.id.password);
-        department=(EditText) findViewById(R.id.department);
-        roll=(EditText) findViewById(R.id.roll );
-        year=(EditText) findViewById(R.id.studentyear);
-        semester=(EditText)findViewById(R.id.studentsemester);
-        qualification=(EditText) findViewById(R.id.staffqualification);
-        designation=(EditText) findViewById(R.id.staffdesignation);
-        signin=(TextView)findViewById(R.id.signin);
-        signin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent);
-            }
-        });
-      /*  Button pic=(Button)findViewById(R.id.uploadpic);
-        pic.setOnClickListener(new View.OnClickListener() {
+    public void signup(View view) {
+        if (name.getText().toString().equals("") || email.getText().toString().equals("") || pass.getText().toString().equals("") || collegeid.getText().toString().equals("") || departmentname.equals("") || yearname.equals("")){
+            Toast.makeText(register.this, "empty input fields", Toast.LENGTH_SHORT).show();
+        } else {
+            final ProgressDialog progressDialog = ProgressDialog.show(register.this, "Please wait...", "Processing...", true);
+            db = FirebaseFirestore.getInstance();
+            /*  Button pic=(Button)findViewById(R.id.uploadpic);
+            pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ImageView
             }
         });
         */
-        db = FirebaseFirestore.getInstance();
-        // Create a new user with a first and last name
-        Map<String, Object> user = new HashMap<>();
-        user.put("name", name.getText().toString());
-        user.put("email", email.getText().toString());
-        user.put("password",pass.getText().toString());
-        user.put("roll",roll.getText().toString());
-        user.put("department",department.getText().toString());
-        if(usertype.equals("STUDENT")) {
-            user.put("Year", year.getText().toString());
-            user.put("Semester",semester.getText().toString());
-        }
-        else {
-            user.put("Designation",designation.getText().toString());
-            user.put("Qualification",qualification.getText().toString());
-        }
-            db.collection(usertype)
-                .document(department.getText().toString())
-                .set(user);
 
-        mAuth.createUserWithEmailAndPassword(email.getText().toString(), pass.getText().toString());
-        Intent intent= new Intent(getApplicationContext(),MainActivity.class);
-        startActivity(intent);
-        finish();
+            db = FirebaseFirestore.getInstance();
+            // Create a new user with a first and last name
+            Map<String, Object> user = new HashMap<>();
+            user.put("name", name.getText().toString());
+            user.put("email", email.getText().toString());
+            user.put("password", pass.getText().toString());
+            user.put("roll", collegeid.getText().toString());
+            user.put("department", departmentname);
+            if (username.equals("STUDENT")) {
+                user.put("Year", yearname);
+            } else {
+                user.put("Designation", designation.getText().toString());
+                user.put("Qualification", qualification.getText().toString());
+            }
+            db.collection(departmentname)
+                    .document(email.getText().toString())
+                    .set(user);
+
+            mAuth.createUserWithEmailAndPassword(email.getText().toString(), pass.getText().toString());
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
 
@@ -85,43 +69,71 @@ public class register extends AppCompatActivity implements AdapterView.OnItemSel
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register2);
+        name = (EditText) findViewById(R.id.name);
+        email = (EditText) findViewById(R.id.email);
+        pass = (EditText) findViewById(R.id.password);
+        collegeid = (EditText) findViewById(R.id.collegeid);
+        qualification = (EditText) findViewById(R.id.qualification);
+        designation = (EditText) findViewById(R.id.designation);
+        Spinner department = (Spinner) findViewById(R.id.department);
+        ArrayAdapter depadapt = ArrayAdapter.createFromResource(this, R.array.DEPARTMENT, android.R.layout.simple_spinner_item);
+        department.setAdapter(depadapt);
+        department.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                departmentname=adapterView.getItemAtPosition(i).toString();
+            }
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.TYPE, android.R.layout.simple_spinner_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+        final Spinner year = (Spinner) findViewById(R.id.year);
+        ArrayAdapter yearadapt = ArrayAdapter.createFromResource(this, R.array.YEAR, android.R.layout.simple_spinner_item);
+        year.setAdapter(yearadapt);
+        year.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    yearname=adapterView.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        final Spinner usertype = (Spinner) findViewById(R.id.usertype);
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.USERTYPE, android.R.layout.simple_spinner_item);
+        usertype.setAdapter(adapter);
+        usertype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i==1)
+                {
+
+                    year.setVisibility(View.VISIBLE);
+                    qualification.setVisibility(View.GONE);
+                    designation.setVisibility(View.GONE);
+                    username = adapterView.getItemAtPosition(i).toString();
+                }
+                else if(i==2)
+                {
+                    year.setVisibility(View.GONE);
+                    qualification.setVisibility(View.VISIBLE);
+                    designation.setVisibility(View.VISIBLE);
+                    username = adapterView.getItemAtPosition(i).toString();
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         mAuth = FirebaseAuth.getInstance();
-
-    }
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-        year=(EditText) findViewById(R.id.studentyear);
-        semester=(EditText)findViewById(R.id.studentsemester);
-        qualification=(EditText) findViewById(R.id.staffqualification);
-        designation=(EditText) findViewById(R.id.staffdesignation);
-        if(i==1)
-        {
-            year.setVisibility(View.VISIBLE);
-            semester.setVisibility(View.VISIBLE);
-            qualification.setVisibility(View.GONE);
-            designation.setVisibility(View.GONE);
-            usertype="STUDENT";
-        }
-        else if(i==2)
-        {
-            year.setVisibility(View.GONE);
-            semester.setVisibility(View.GONE);
-           qualification.setVisibility(View.VISIBLE);
-           designation.setVisibility(View.VISIBLE);
-           usertype="STAFF";
-        }
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
 }

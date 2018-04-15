@@ -19,7 +19,7 @@ public class giveattendance extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.attendance,container,false);
+        view = inflater.inflate(R.layout.giveattendance,container,false);
 
         ArrayList<attendancedesign> attendance = new ArrayList<attendancedesign>();
         attendance.add(new attendancedesign("Abhisekh", "2"));

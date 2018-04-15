@@ -51,10 +51,10 @@ public class attendanceyear extends Fragment{
         @Override
         public android.support.v4.app.Fragment getItem(int position) {
             switch (position) {
-                case 0:return new firstyear();
-                case 1:return new secondyear();
-                case 2: return new thirdyear();
-                case 3: return new fourthyear();
+                case 0:return new yearattendance();
+                case 1:return new yearattendance();
+                case 2: return new yearattendance();
+                case 3: return new yearattendance();
             }
             return null;
         }

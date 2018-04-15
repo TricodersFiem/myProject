@@ -8,8 +8,8 @@
 
     <LinearLayout
         android:id="@+id/linearlayout"
-        android:layout_width="350dp"
-        android:layout_height="484dp"
+        android:layout_width="326dp"
+        android:layout_height="496dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="53dp"
         android:layout_marginStart="53dp"
@@ -17,9 +17,10 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.569"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.266"
+        app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints">
 
         <EditText
@@ -48,15 +49,7 @@
 
 
         <EditText
-            android:id="@+id/department"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Department"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/roll"
+            android:id="@+id/collegeid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -64,33 +57,24 @@
             android:inputType="textPersonName" />
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/department"
             android:layout_width="match_parent"
-            android:layout_height="39dp"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:id="@+id/usertype"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:tag="TYPE" />
 
-        <EditText
-            android:id="@+id/studentyear"
+        <Spinner
+            android:id="@+id/year"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Year"
-            android:inputType="textPersonName"
-            android:visibility="gone"
-            tools:layout_editor_absoluteX="184dp"
-            tools:layout_editor_absoluteY="268dp" />
-
-        <EditText
-            android:id="@+id/studentsemester"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Semester"
-            android:inputType="textPersonName"
             android:visibility="gone" />
 
         <EditText
-            android:id="@+id/staffqualification"
+            android:id="@+id/qualification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -99,7 +83,7 @@
             android:visibility="gone" />
 
         <EditText
-            android:id="@+id/staffdesignation"
+            android:id="@+id/designation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -122,20 +106,5 @@
 
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/signin"
-        android:layout_width="211dp"
-        android:layout_height="27dp"
-        android:layout_marginBottom="35dp"
-        android:layout_marginEnd="58dp"
-        android:layout_marginStart="57dp"
-        android:layout_marginTop="40dp"
-        android:text="ALREADY REGISTERED? SIGN IN"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearlayout"
-        tools:ignore="MissingConstraints" />
 
 </android.support.constraint.ConstraintLayout>

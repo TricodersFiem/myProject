@@ -19,7 +19,7 @@ public class giveinternalmarks extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.internalmarks, container, false);
+        view = inflater.inflate(R.layout.giveinternalmarks, container, false);
 
         ArrayList<InternalMarksDesign> internalMarks = new ArrayList<InternalMarksDesign>();
         internalMarks.add(new InternalMarksDesign("Abhisekh", "2"));
@@ -30,6 +30,7 @@ public class giveinternalmarks extends Fragment {
        ListView listView = (ListView) view.findViewById(R.id.list_view);
         listView.setAdapter(marksAdapter);
         return view;
-    }
+        }
+
 }
 
