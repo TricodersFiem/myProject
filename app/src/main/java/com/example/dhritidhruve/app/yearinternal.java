@@ -33,8 +33,11 @@ public class yearinternal extends Fragment {
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity(),giveinternalmarks.class);
-                startActivity(intent);
+                if (i >= 0) {
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.contenedor,new giveinternalmarks())
+                            .commit();
+                }
             }
         });
     }
@@ -44,21 +47,9 @@ public class yearinternal extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-        view= inflater.inflate(R.layout.yearattendance,container,false);
+        view = inflater.inflate(R.layout.yearattendance, container, false);
         return view;
 
     }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
 }
-
-
 

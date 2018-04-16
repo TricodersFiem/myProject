@@ -93,7 +93,7 @@
 
         <Button
             android:id="@+id/uploadpic"
-            android:layout_width="match_parent"
+            android:layout_width="149dp"
             android:layout_height="wrap_content"
             android:text="UPLOAD PICTURE" />
 
@@ -103,6 +103,12 @@
             android:layout_height="wrap_content"
             android:onClick="signup"
             android:text="SIGN UP" />
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@color/common_google_signin_btn_text_dark_disabled" />
 
 
     </LinearLayout>

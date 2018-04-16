@@ -50,10 +50,10 @@ public class notice extends Fragment {
             @Override
             public Fragment getItem(int position) {
                 switch (position) {
-                    case 0:return new xplorica();
-                    case 1:return new culrav();
-                    case 2:return new sportivo();
-                    case 3:return new academic();
+                    case 0:return new noticetypes();
+                    case 1:return new noticetypes();
+                    case 2:return new noticetypes();
+                    case 3:return new noticetypes();
                 }
                 return null;
             }

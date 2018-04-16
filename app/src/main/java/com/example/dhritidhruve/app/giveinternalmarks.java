@@ -27,10 +27,9 @@ public class giveinternalmarks extends Fragment {
         InternalMarksAdapter marksAdapter = new InternalMarksAdapter(getActivity(), internalMarks);
 
 
-       ListView listView = (ListView) view.findViewById(R.id.list_view);
+        ListView listView = (ListView) view.findViewById(R.id.list_view1);
         listView.setAdapter(marksAdapter);
         return view;
-        }
+    }
 
 }
-

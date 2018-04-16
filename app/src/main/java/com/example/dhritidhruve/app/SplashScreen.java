@@ -7,13 +7,12 @@ import android.os.Bundle;
 
 public class SplashScreen extends AppCompatActivity {
 
-    private static int SPLASH_TIMEOUT = 1000;//timeout 2.5s
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("MyFiem");
         setContentView(R.layout.activity_splash_screen);
+        int SPLASH_TIMEOUT = 1000;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

@@ -1,6 +1,7 @@
 package com.example.dhritidhruve.app;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -119,6 +120,13 @@ public class user extends AppCompatActivity
                     .replace(R.id.contenedor,new notice())
                     .commit();
 
+        }
+        else if (id == R.id.nav_signout) {
+
+                 FirebaseAuth.getInstance().signOut();
+            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

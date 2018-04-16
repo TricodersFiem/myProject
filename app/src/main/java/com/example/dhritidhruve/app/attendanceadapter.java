@@ -39,7 +39,6 @@ public class attendanceadapter extends ArrayAdapter<attendancedesign> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        //Check if the existing view is being reused, otherwise inflate the view
         View listItemView = convertView;
          ViewHolder holder = new ViewHolder();
         LayoutInflater inflator = ((Activity) context).getLayoutInflater();
@@ -61,9 +60,6 @@ public class attendanceadapter extends ArrayAdapter<attendancedesign> {
     }
 
     private void setupItem(ViewHolder holder) {
-
-       // if(holder.attendance.getAttendance())
-         //   holder.check.setText("Present");
         holder.percent.setText(String.valueOf(holder.attendance.getPercent()));
         holder.name.setText(holder.attendance.getName());
         holder.roll.setText(holder.attendance.getRoll());
@@ -71,6 +67,7 @@ public class attendanceadapter extends ArrayAdapter<attendancedesign> {
     }
     private void addListenerOncheck(final ViewHolder holder, CheckBox check){
         check.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 if (((CheckBox)view).isChecked()) {

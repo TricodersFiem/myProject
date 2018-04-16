@@ -20,6 +20,10 @@
             android:id="@+id/nav_notice"
             android:icon="@android:color/holo_red_dark"
             android:title="Notice" />
+        <item
+            android:id="@+id/nav_signout"
+            android:icon="@android:color/holo_red_dark"
+            android:title="Signout" />
 
     </group>
 

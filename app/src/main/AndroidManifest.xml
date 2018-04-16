@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="myFiem"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -24,7 +23,10 @@
             android:name=".user"
             android:label="@string/title_activity_user"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".checkattendance"></activity>
+        <activity android:name=".checkattendance" />
+        <activity android:name=".checkinternalmarks" />
+        <activity android:name=".giveattendance" />
+        <activity android:name=".giveinternalmarks" />
     </application>
 
 </manifest>

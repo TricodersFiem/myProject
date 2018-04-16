@@ -7,13 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class culrav extends Fragment {
+public class noticetypes extends Fragment {
+
+
         View view;
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-            view= inflater.inflate(R.layout.culrav,container,false);
+            view= inflater.inflate(R.layout.noticetypes,container,false);
             return view;
+
         }
 }
+
+

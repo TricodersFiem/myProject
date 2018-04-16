@@ -19,13 +19,11 @@ public class attendancedesign {
 
     public void setAttendance(boolean present){
 
-       this.present=present;
+        this.present=present;
     }
     public boolean getAttendance(){return present;
     }
 
     public float getPercent(){return 0 ; }
 
-   }
-
-
+}
