@@ -33,7 +33,11 @@ public class register extends AppCompatActivity {
     private FirebaseAuth mAuth;
     EditText name, email, pass, collegeid;
     EditText qualification, designation;
-    String username,yearname,departmentname;
+    Spinner usertype;
+    String type,yearname,departmentname;
+    Student current;
+    Staff currentStaff;
+    ImageView imageView;
     public static final int RESULT_LOAD_IMAGE = 1;
     private StorageReference mStorageRef;
     public void signup(View view) {
@@ -43,18 +47,19 @@ public class register extends AppCompatActivity {
             final ProgressDialog progressDialog = ProgressDialog.show(register.this, "Please wait...", "Processing...", true);
             db = FirebaseFirestore.getInstance();
             // Create a new user with a first and last name
+            type =
             Map<String, Object> user = new HashMap<>();
             user.put("name", name.getText().toString());
             user.put("email", email.getText().toString());
             user.put("password", pass.getText().toString());
-            user.put("roll", collegeid.getText().toString());
+            user.put("collegeid", collegeid.getText().toString());
             user.put("department", departmentname);
-
-            if (username.equals("STUDENT")) {
-                user.put("Year", yearname);
+            user.put("Type",type);
+            type = usertype.getTag().toString();
+            if (type.equals("STUDENT")) {
+               current=new Student(name.getText().toString(),collegeid.getText().toString(),email.getText().toString(), pass.getText().toString(),yearname,departmentname);
             } else {
-                user.put("Designation", designation.getText().toString());
-                user.put("Qualification", qualification.getText().toString());
+                currentStaff=new Staff(name.getText().toString(),collegeid.getText().toString(),email.getText().toString(), pass.getText().toString(),departmentname,qualification.getText().toString(),designation.getText().toString());
             }
             db.collection(departmentname)
                     .document(email.getText().toString())
@@ -73,7 +78,7 @@ public class register extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==RESULT_LOAD_IMAGE && resultCode==RESULT_OK && data!=null ){
             Uri selectedImage=data.getData();
-            StorageReference imgeref =mStorageRef.child(email.getText().toString()+".jpg");
+            StorageReference imgeref =mStorageRef.child(name.getText().toString()+".jpg");
             imgeref.putFile(selectedImage)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -82,7 +87,7 @@ public class register extends AppCompatActivity {
                         }
                     });
             // upload to storage
-            ImageView imageView=(ImageView)findViewById(R.id.img);
+            imageView=(ImageView)findViewById(R.id.img);
             imageView.setImageURI(selectedImage);
 
         }
@@ -136,7 +141,7 @@ public class register extends AppCompatActivity {
             }
         });
 
-        final Spinner usertype = (Spinner) findViewById(R.id.usertype);
+        usertype = (Spinner) findViewById(R.id.usertype);
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.USERTYPE, android.R.layout.simple_spinner_item);
         usertype.setAdapter(adapter);
         usertype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -148,14 +153,14 @@ public class register extends AppCompatActivity {
                     year.setVisibility(View.VISIBLE);
                     qualification.setVisibility(View.GONE);
                     designation.setVisibility(View.GONE);
-                    username = adapterView.getItemAtPosition(i).toString();
+                    type = adapterView.getItemAtPosition(i).toString();
                 }
                 else if(i==2)
                 {
                     year.setVisibility(View.GONE);
                     qualification.setVisibility(View.VISIBLE);
                     designation.setVisibility(View.VISIBLE);
-                    username = adapterView.getItemAtPosition(i).toString();
+                    type = adapterView.getItemAtPosition(i).toString();
                 }
 
             }
