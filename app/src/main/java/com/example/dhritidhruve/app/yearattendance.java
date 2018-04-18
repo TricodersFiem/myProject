@@ -30,16 +30,18 @@ public class yearattendance extends Fragment {
         arrayList.add("EE");
         arrayList.add("IT");
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, arrayList);
-        listView.setAdapter(adapter);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i >= 0) {
-                    getFragmentManager().beginTransaction()
-                            .replace(R.id.contenedor,new giveattendance())
+                    getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.contenedor, new giveattendance())
                             .commit();
                 }
             }
         });
+        listView.setAdapter(adapter);
     }
 
     View view;

@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,8 +18,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -33,38 +37,41 @@ public class register extends AppCompatActivity {
     private FirebaseAuth mAuth;
     EditText name, email, pass, collegeid;
     EditText qualification, designation;
-    Spinner usertype;
-    String type,yearname,departmentname;
+    Spinner usertype, year, department;
+    String type, currentYear, currentDepartment;
     Student current;
     Staff currentStaff;
     ImageView imageView;
     public static final int RESULT_LOAD_IMAGE = 1;
     private StorageReference mStorageRef;
+
     public void signup(View view) {
-        if (name.getText().toString().equals("") || email.getText().toString().equals("") || pass.getText().toString().equals("") || collegeid.getText().toString().equals("") || departmentname.equals("") || yearname.equals("")){
+        if (name.getText().toString().equals("") || email.getText().toString().equals("") || pass.getText().toString().equals("") || collegeid.getText().toString().equals("") || currentDepartment.equals("")){
             Toast.makeText(register.this, "empty input fields", Toast.LENGTH_SHORT).show();
         } else {
             final ProgressDialog progressDialog = ProgressDialog.show(register.this, "Please wait...", "Processing...", true);
             db = FirebaseFirestore.getInstance();
-            // Create a new user with a first and last name
-            type =
-            Map<String, Object> user = new HashMap<>();
-            user.put("name", name.getText().toString());
-            user.put("email", email.getText().toString());
-            user.put("password", pass.getText().toString());
-            user.put("collegeid", collegeid.getText().toString());
-            user.put("department", departmentname);
-            user.put("Type",type);
-            type = usertype.getTag().toString();
-            if (type.equals("STUDENT")) {
-               current=new Student(name.getText().toString(),collegeid.getText().toString(),email.getText().toString(), pass.getText().toString(),yearname,departmentname);
-            } else {
-                currentStaff=new Staff(name.getText().toString(),collegeid.getText().toString(),email.getText().toString(), pass.getText().toString(),departmentname,qualification.getText().toString(),designation.getText().toString());
-            }
-            db.collection(departmentname)
-                    .document(email.getText().toString())
-                    .set(user);
 
+            if (type.equals("STUDENT")) {
+                current = new Student(name.getText().toString(), collegeid.getText().toString(), email.getText().toString(), pass.getText().toString(), currentYear, currentDepartment);
+                db.collection("Department").document(current.getDepartment()).collection("StudentCollection").document(current.getYear()).set(current)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(register.this, "User Successfully added", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(register.this, "Can't add user", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+            } else {
+                currentStaff=new Staff(name.getText().toString(),collegeid.getText().toString(),email.getText().toString(), pass.getText().toString(),currentDepartment,qualification.getText().toString(),designation.getText().toString());
+                db.collection("Department").document(current.getDepartment()).collection("StaffCollection").document("goOn").set(currentStaff);
+            }
             mAuth.createUserWithEmailAndPassword(email.getText().toString(), pass.getText().toString());
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
@@ -87,7 +94,7 @@ public class register extends AppCompatActivity {
                         }
                     });
             // upload to storage
-            imageView=(ImageView)findViewById(R.id.img);
+
             imageView.setImageURI(selectedImage);
 
         }
@@ -97,14 +104,21 @@ public class register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register2);
+        //Initialization of the instance variable
         name = (EditText) findViewById(R.id.name);
         email = (EditText) findViewById(R.id.email);
         pass = (EditText) findViewById(R.id.password);
         collegeid = (EditText) findViewById(R.id.collegeid);
         qualification = (EditText) findViewById(R.id.qualification);
         designation = (EditText) findViewById(R.id.designation);
-        mStorageRef = FirebaseStorage.getInstance().getReference();
-        Button pic=(Button)findViewById(R.id.uploadpic);
+        imageView=(ImageView)findViewById(R.id.image);
+        mStorageRef = FirebaseStorage.getInstance().getReference();//Firebase storage variable initialization
+        Button pic=(Button)findViewById(R.id.uploadpic);//Upload the picture
+        department = (Spinner) findViewById(R.id.department);
+        year = (Spinner) findViewById(R.id.year);
+        usertype = (Spinner) findViewById(R.id.usertype);
+
+        //button clk for uploading picture in the database
         pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,13 +126,14 @@ public class register extends AppCompatActivity {
                 startActivityForResult(i,RESULT_LOAD_IMAGE);
             }
         });
-        Spinner department = (Spinner) findViewById(R.id.department);
+
+        //Setting the adapter for department (spinner)
         ArrayAdapter depadapt = ArrayAdapter.createFromResource(this, R.array.DEPARTMENT, android.R.layout.simple_spinner_item);
         department.setAdapter(depadapt);
         department.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                departmentname=adapterView.getItemAtPosition(i).toString();
+                currentDepartment=adapterView.getItemAtPosition(i).toString();
             }
 
             @Override
@@ -126,13 +141,14 @@ public class register extends AppCompatActivity {
 
             }
         });
-        final Spinner year = (Spinner) findViewById(R.id.year);
+
+        //Spinner for year
         ArrayAdapter yearadapt = ArrayAdapter.createFromResource(this, R.array.YEAR, android.R.layout.simple_spinner_item);
         year.setAdapter(yearadapt);
         year.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    yearname=adapterView.getItemAtPosition(i).toString();
+                    currentYear=adapterView.getItemAtPosition(i).toString();
             }
 
             @Override
@@ -141,12 +157,13 @@ public class register extends AppCompatActivity {
             }
         });
 
-        usertype = (Spinner) findViewById(R.id.usertype);
+        //Spinner for usertype
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.USERTYPE, android.R.layout.simple_spinner_item);
         usertype.setAdapter(adapter);
         usertype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                type = adapterView.getItemAtPosition(i).toString();
                 if(i==1)
                 {
 
