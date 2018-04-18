@@ -25,20 +25,28 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import org.w3c.dom.Document;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class user extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    TextView name,collegeid,department,qualification,designation,year;
+    FirebaseFirestore db;
+    TextView qualification,designation,name,collegeid,department,year;
     ImageView userpic;
+    Student student;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +59,51 @@ public class user extends AppCompatActivity
         designation=(TextView)findViewById(R.id.designation);
         qualification=(TextView)findViewById(R.id.qualification);
         year=(TextView)findViewById(R.id.year);
-        collegeid=(TextView)findViewById(R.id.collegeid);
+        collegeid=(TextView)findViewById(R.id.collegeId);
         userpic=(ImageView)findViewById(R.id.userpic);
+        db = FirebaseFirestore.getInstance();
+        /*
+        DocumentReference docRef = db.collection("cities").document("BJ");
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Student city = documentSnapshot.toObject(Student.class);
+            }
+        });
+        */
+        //Get the data from the database
+         db.collection("Department")
+                 .document("CSE")
+                 .collection("StudentCollection")
+                .whereEqualTo("email","emperorabbas@gmail.com")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for(QueryDocumentSnapshot document : task.getResult()) {
+                                if (document.exists()) {
+
+                                     student = document.toObject(Student.class);
+                                     changeText();
+                                    Log.i("TAG", document.getId() + " => " + document.getData());
+                                }
+                                else{
+
+
+
+                                    Log.d("MyTag", "passed"); }
+                            }
+
+
+                        }
+                        else{
+                            Log.d("Tag","failed");
+                        }
+                    }
+                });
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -64,6 +115,12 @@ public class user extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    public void changeText(){
+        name.setText(student.getName());
+        department.setText(student.getDepartment());
+        year.setText(student.getYear());
+        collegeid.setText(student.getCollegeId());
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -128,7 +185,7 @@ public class user extends AppCompatActivity
         }
         else if (id == R.id.nav_signout) {
 
-                 FirebaseAuth.getInstance().signOut();
+            FirebaseAuth.getInstance().signOut();
             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
             startActivity(intent);
             finish();

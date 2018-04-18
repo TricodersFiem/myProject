@@ -35,7 +35,7 @@ import java.util.Map;
 public class register extends AppCompatActivity {
     FirebaseFirestore db;
     private FirebaseAuth mAuth;
-    EditText name, email, pass, collegeid;
+    EditText name, email, pass, collegeId;
     EditText qualification, designation;
     Spinner usertype, year, department;
     String type, currentYear, currentDepartment;
@@ -46,14 +46,14 @@ public class register extends AppCompatActivity {
     private StorageReference mStorageRef;
 
     public void signup(View view) {
-        if (name.getText().toString().equals("") || email.getText().toString().equals("") || pass.getText().toString().equals("") || collegeid.getText().toString().equals("") || currentDepartment.equals("")){
+        if (name.getText().toString().equals("") || email.getText().toString().equals("") || pass.getText().toString().equals("") || collegeId.getText().toString().equals("") || currentDepartment.equals("")){
             Toast.makeText(register.this, "empty input fields", Toast.LENGTH_SHORT).show();
         } else {
             final ProgressDialog progressDialog = ProgressDialog.show(register.this, "Please wait...", "Processing...", true);
             db = FirebaseFirestore.getInstance();
 
             if (type.equals("STUDENT")) {
-                current = new Student(name.getText().toString(), collegeid.getText().toString(), email.getText().toString(), pass.getText().toString(), currentYear, currentDepartment);
+                current = new Student(name.getText().toString(), collegeId.getText().toString(), email.getText().toString(), currentYear, currentDepartment);
                 db.collection("Department").document(current.getDepartment()).collection("StudentCollection").document(current.getYear()).set(current)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -69,7 +69,7 @@ public class register extends AppCompatActivity {
                         });
 
             } else {
-                currentStaff=new Staff(name.getText().toString(),collegeid.getText().toString(),email.getText().toString(), pass.getText().toString(),currentDepartment,qualification.getText().toString(),designation.getText().toString());
+                currentStaff=new Staff(name.getText().toString(),collegeId.getText().toString(),email.getText().toString(), pass.getText().toString(),currentDepartment,qualification.getText().toString(),designation.getText().toString());
                 db.collection("Department").document(current.getDepartment()).collection("StaffCollection").document("goOn").set(currentStaff);
             }
             mAuth.createUserWithEmailAndPassword(email.getText().toString(), pass.getText().toString());
@@ -108,7 +108,7 @@ public class register extends AppCompatActivity {
         name = (EditText) findViewById(R.id.name);
         email = (EditText) findViewById(R.id.email);
         pass = (EditText) findViewById(R.id.password);
-        collegeid = (EditText) findViewById(R.id.collegeid);
+        collegeId = (EditText) findViewById(R.id.collegeid);
         qualification = (EditText) findViewById(R.id.qualification);
         designation = (EditText) findViewById(R.id.designation);
         imageView=(ImageView)findViewById(R.id.image);
