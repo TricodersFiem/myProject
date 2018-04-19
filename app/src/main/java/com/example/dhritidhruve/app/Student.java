@@ -1,14 +1,15 @@
 package com.example.dhritidhruve.app;
 
 public class Student {
-    public String name, email, password, collegeId, department,year;
+    public String name, email, collegeId, department, year, photoId;
 
-    Student(String name, String collegeId, String email, String year, String department){
+    Student(String name, String collegeId, String email, String year, String department, String photoId){
         this.name = name;
         this.collegeId = collegeId;
         this.email = email;
         this.year = year;
         this.department = department;
+        this.photoId = photoId;
     }
     Student(){
 
@@ -19,4 +20,5 @@ public class Student {
     public String getCollegeId(){return collegeId;}
     public String getYear(){return year;}
     public String getDepartment(){return department;}
+    public String getPhotoId(){return photoId;}
 }

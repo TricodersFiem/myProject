@@ -42,6 +42,7 @@ public class register extends AppCompatActivity {
     Student current;
     Staff currentStaff;
     ImageView imageView;
+    String photoId;
     public static final int RESULT_LOAD_IMAGE = 1;
     private StorageReference mStorageRef;
 
@@ -53,7 +54,7 @@ public class register extends AppCompatActivity {
             db = FirebaseFirestore.getInstance();
 
             if (type.equals("STUDENT")) {
-                current = new Student(name.getText().toString(), collegeId.getText().toString(), email.getText().toString(), currentYear, currentDepartment);
+                current = new Student(name.getText().toString(), collegeId.getText().toString(), email.getText().toString(), currentYear, currentDepartment,photoId);
                 db.collection("Person").document("STUDENT").set(current)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -69,7 +70,7 @@ public class register extends AppCompatActivity {
                         });
 
             } else {
-                currentStaff=new Staff(name.getText().toString(),collegeId.getText().toString(),email.getText().toString(),currentDepartment,qualification.getText().toString(),designation.getText().toString());
+                currentStaff=new Staff(name.getText().toString(),collegeId.getText().toString(),email.getText().toString(),currentDepartment,qualification.getText().toString(),designation.getText().toString(), photoId);
                 db.collection("Person").document("STAFF").set(currentStaff)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -101,6 +102,7 @@ public class register extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                            photoId = downloadUrl.toString();
                         }
                     });
             // upload to storage

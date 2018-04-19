@@ -28,6 +28,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -43,7 +44,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 
 
 import org.w3c.dom.Document;
@@ -65,16 +65,22 @@ public class user extends AppCompatActivity
     Student student;
     String email;
     Staff staff;
-    StorageReference imgeref;
-
+    //Create an instance of storage reference
+    StorageReference imageref;
+    FirebaseUser user;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        imgeref = FirebaseStorage.getInstance().getReference();
+
+        imageref = FirebaseStorage.getInstance().getReference();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        email = user.getEmail();
+
         name = (TextView) findViewById(R.id.name);
         department = (TextView) findViewById(R.id.department);
         designation = (TextView) findViewById(R.id.designation);
@@ -82,10 +88,10 @@ public class user extends AppCompatActivity
         year = (TextView) findViewById(R.id.year);
         collegeid = (TextView) findViewById(R.id.collegeId);
         userpic = (ImageView) findViewById(R.id.userpic);
-        Intent intent = getIntent();
-        email = intent.getStringExtra("txtEmail");
-        db = FirebaseFirestore.getInstance();
 
+
+
+        db = FirebaseFirestore.getInstance();
         db.collection("Person")
                 .whereEqualTo("email", email)
                 .get()
@@ -95,17 +101,15 @@ public class user extends AppCompatActivity
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (document.exists()) {
-                                    if (document.getId() == "STUDENT") {
+                                    if (document.getId().equals("STUDENT")) {
+                                        Log.d("MyTag", "passed");
                                         student = document.toObject(Student.class);
+                                        //Log.d("msg",student.getPhotoId());
                                         changeTextStudent();
                                     } else {
                                         staff = document.toObject(Staff.class);
                                         changeTextStaff();
                                     }
-                                } else {
-
-
-                                    Log.d("MyTag", "passed");
                                 }
                             }
 
@@ -128,13 +132,14 @@ public class user extends AppCompatActivity
     }
 
     public void changeTextStudent() {
+        designation.setVisibility(GONE);
+        qualification.setVisibility(GONE);
         name.setText("Name: " + student.getName());
         department.setText("Department: " + student.getDepartment());
         year.setText("Year: " + student.getYear());
         collegeid.setText("College Id: " + student.getCollegeId());
-        designation.setVisibility(GONE);
-        qualification.setVisibility(GONE);
-        changeImage();
+
+        changeImageByUrl();
     }
     public void changeTextStaff() {
         name.setText("Name: " + staff.getName());
@@ -143,29 +148,30 @@ public class user extends AppCompatActivity
         collegeid.setText("College Id: " + staff.getCollegeId());
         qualification.setText("Qualification: "+ staff.getQualification());
         year.setVisibility(GONE);
-        changeImage();
+        changeImageByUrl();
     }
     public void changeImageByUrl(){
-        imgeref.child(email+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        imageref.child(email+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-               // Uri downloadUri = taskSnapshot.getMetadata().getDownloadUrl();
+                Glide.with(getApplicationContext())
+                        .load(uri)
+                        .into(userpic);
+
             }
         });
+
+
     }
     public void changeImage() {
+        StorageReference storageReference = imageref.child(email+".jpg");
         try {
             final File localFile = File.createTempFile(email, "jpg");
-            imgeref.getFile(localFile)
+            imageref.getFile(localFile)
                     .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                            // Successfully downloaded data to local file
-                            // ...
-                            Log.i("mesg","downloaded");
-                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                            userpic.setImageBitmap(bitmap);
-                            // Toast.makeText(user.this, "Download successful!", Toast.LENGTH_SHORT).show();
+                           // Uri download_url = taskSnapshot.getDownloadUrl();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
