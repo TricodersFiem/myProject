@@ -54,7 +54,7 @@ public class register extends AppCompatActivity {
 
             if (type.equals("STUDENT")) {
                 current = new Student(name.getText().toString(), collegeId.getText().toString(), email.getText().toString(), currentYear, currentDepartment);
-                db.collection("Department").document(current.getDepartment()).collection("StudentCollection").document(current.getYear()).set(current)
+                db.collection("Person").document("STUDENT").set(current)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -69,8 +69,20 @@ public class register extends AppCompatActivity {
                         });
 
             } else {
-                currentStaff=new Staff(name.getText().toString(),collegeId.getText().toString(),email.getText().toString(), pass.getText().toString(),currentDepartment,qualification.getText().toString(),designation.getText().toString());
-                db.collection("Department").document(current.getDepartment()).collection("StaffCollection").document("goOn").set(currentStaff);
+                currentStaff=new Staff(name.getText().toString(),collegeId.getText().toString(),email.getText().toString(),currentDepartment,qualification.getText().toString(),designation.getText().toString());
+                db.collection("Person").document("STAFF").set(currentStaff)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(register.this, "User Successfully added", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(register.this, "Can't add user", Toast.LENGTH_SHORT).show();
+                            }
+                        });
             }
             mAuth.createUserWithEmailAndPassword(email.getText().toString(), pass.getText().toString());
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -78,14 +90,12 @@ public class register extends AppCompatActivity {
             finish();
         }
     }
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==RESULT_LOAD_IMAGE && resultCode==RESULT_OK && data!=null ){
             Uri selectedImage=data.getData();
-            StorageReference imgeref =mStorageRef.child(name.getText().toString()+".jpg");
+            StorageReference imgeref =mStorageRef.child(email.getText().toString()+".jpg");
             imgeref.putFile(selectedImage)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override

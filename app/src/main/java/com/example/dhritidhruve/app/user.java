@@ -2,6 +2,9 @@ package com.example.dhritidhruve.app;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -23,8 +26,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,18 +40,33 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
+
 
 import org.w3c.dom.Document;
 
+import java.io.File;
+import java.io.IOException;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.view.View.GONE;
+
 
 public class user extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     FirebaseFirestore db;
-    TextView qualification,designation,name,collegeid,department,year;
+    TextView qualification, designation, name, collegeid, department, year;
     ImageView userpic;
     Student student;
+    String email;
+    Staff staff;
+    StorageReference imgeref;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,55 +74,47 @@ public class user extends AppCompatActivity
         setContentView(R.layout.activity_user);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        name=(TextView)findViewById(R.id.name);
-        department=(TextView)findViewById(R.id.department);
-        designation=(TextView)findViewById(R.id.designation);
-        qualification=(TextView)findViewById(R.id.qualification);
-        year=(TextView)findViewById(R.id.year);
-        collegeid=(TextView)findViewById(R.id.collegeId);
-        userpic=(ImageView)findViewById(R.id.userpic);
+        imgeref = FirebaseStorage.getInstance().getReference();
+        name = (TextView) findViewById(R.id.name);
+        department = (TextView) findViewById(R.id.department);
+        designation = (TextView) findViewById(R.id.designation);
+        qualification = (TextView) findViewById(R.id.qualification);
+        year = (TextView) findViewById(R.id.year);
+        collegeid = (TextView) findViewById(R.id.collegeId);
+        userpic = (ImageView) findViewById(R.id.userpic);
+        Intent intent = getIntent();
+        email = intent.getStringExtra("txtEmail");
         db = FirebaseFirestore.getInstance();
-        /*
-        DocumentReference docRef = db.collection("cities").document("BJ");
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Student city = documentSnapshot.toObject(Student.class);
-            }
-        });
-        */
-        //Get the data from the database
-         db.collection("Department")
-                 .document("CSE")
-                 .collection("StudentCollection")
-                .whereEqualTo("email","emperorabbas@gmail.com")
+
+        db.collection("Person")
+                .whereEqualTo("email", email)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            for(QueryDocumentSnapshot document : task.getResult()) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (document.exists()) {
+                                    if (document.getId() == "STUDENT") {
+                                        student = document.toObject(Student.class);
+                                        changeTextStudent();
+                                    } else {
+                                        staff = document.toObject(Staff.class);
+                                        changeTextStaff();
+                                    }
+                                } else {
 
-                                     student = document.toObject(Student.class);
-                                     changeText();
-                                    Log.i("TAG", document.getId() + " => " + document.getData());
+
+                                    Log.d("MyTag", "passed");
                                 }
-                                else{
-
-
-
-                                    Log.d("MyTag", "passed"); }
                             }
 
 
-                        }
-                        else{
-                            Log.d("Tag","failed");
+                        } else {
+                            Log.d("Tag", "failed");
                         }
                     }
                 });
-
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -115,12 +127,61 @@ public class user extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    public void changeText(){
-        name.setText(student.getName());
-        department.setText(student.getDepartment());
-        year.setText(student.getYear());
-        collegeid.setText(student.getCollegeId());
+    public void changeTextStudent() {
+        name.setText("Name: " + student.getName());
+        department.setText("Department: " + student.getDepartment());
+        year.setText("Year: " + student.getYear());
+        collegeid.setText("College Id: " + student.getCollegeId());
+        designation.setVisibility(GONE);
+        qualification.setVisibility(GONE);
+        changeImage();
     }
+    public void changeTextStaff() {
+        name.setText("Name: " + staff.getName());
+        department.setText("Department: " + staff.getDepartment());
+        designation.setText("Designation: "+ staff.getDesignation());
+        collegeid.setText("College Id: " + staff.getCollegeId());
+        qualification.setText("Qualification: "+ staff.getQualification());
+        year.setVisibility(GONE);
+        changeImage();
+    }
+    public void changeImageByUrl(){
+        imgeref.child(email+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+               // Uri downloadUri = taskSnapshot.getMetadata().getDownloadUrl();
+            }
+        });
+    }
+    public void changeImage() {
+        try {
+            final File localFile = File.createTempFile(email, "jpg");
+            imgeref.getFile(localFile)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            // Successfully downloaded data to local file
+                            // ...
+                            Log.i("mesg","downloaded");
+                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                            userpic.setImageBitmap(bitmap);
+                            // Toast.makeText(user.this, "Download successful!", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle failed download
+                    // ...
+                }
+            });
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
