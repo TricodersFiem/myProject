@@ -12,7 +12,7 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTitle("MyFiem");
         setContentView(R.layout.activity_splash_screen);
-        int SPLASH_TIMEOUT = 1000;
+        int SPLASH_TIMEOUT = 2000;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

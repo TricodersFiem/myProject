@@ -132,8 +132,8 @@ public class user extends AppCompatActivity
     }
 
     public void changeTextStudent() {
-        designation.setVisibility(GONE);
-        qualification.setVisibility(GONE);
+        designation.setVisibility(View.GONE);
+        qualification.setVisibility(View.GONE);
         name.setText("Name: " + student.getName());
         department.setText("Department: " + student.getDepartment());
         year.setText("Year: " + student.getYear());
@@ -147,7 +147,7 @@ public class user extends AppCompatActivity
         designation.setText("Designation: "+ staff.getDesignation());
         collegeid.setText("College Id: " + staff.getCollegeId());
         qualification.setText("Qualification: "+ staff.getQualification());
-        year.setVisibility(GONE);
+        year.setVisibility(View.GONE);
         changeImageByUrl();
     }
     public void changeImageByUrl(){
