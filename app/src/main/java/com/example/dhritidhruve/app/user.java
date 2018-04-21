@@ -2,18 +2,13 @@ package com.example.dhritidhruve.app;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.ListViewAutoScrollHelper;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -21,12 +16,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,9 +26,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -46,21 +34,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 
-import org.w3c.dom.Document;
-
 import java.io.File;
 import java.io.IOException;
-import java.time.Year;
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.view.View.GONE;
 
 
 public class user extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     FirebaseFirestore db;
-    TextView qualification, designation, name, collegeid, department, year;
+    TextView qualification, designation, name, collegeid, department, year, useremail,username;
     ImageView userpic;
     Student student;
     String email;
@@ -88,8 +69,8 @@ public class user extends AppCompatActivity
         year = (TextView) findViewById(R.id.year);
         collegeid = (TextView) findViewById(R.id.collegeId);
         userpic = (ImageView) findViewById(R.id.userpic);
-
-
+        useremail=(TextView)findViewById(R.id.usernamenav);
+        username=(TextView)findViewById(R.id.usernamenav);
 
         db = FirebaseFirestore.getInstance();
         db.collection("Person")
@@ -137,11 +118,14 @@ public class user extends AppCompatActivity
         designation.setVisibility(View.GONE);
         qualification.setVisibility(View.GONE);
         name.setText("Name: " + student.getName());
+        useremail.setText(student.getEmail());
+        username.setText(student.getName());
         department.setText("Department: " + student.getDepartment());
         year.setText("Year: " + student.getYear());
         collegeid.setText("College Id: " + student.getCollegeId());
 
         changeImageByUrl();
+
     }
     public void changeTextStaff() {
         name.setText("Name: " + staff.getName());
@@ -151,6 +135,7 @@ public class user extends AppCompatActivity
         qualification.setText("Qualification: "+ staff.getQualification());
         year.setVisibility(View.GONE);
         changeImageByUrl();
+
     }
     public void changeImageByUrl(){
         imageref.child(email+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -162,32 +147,9 @@ public class user extends AppCompatActivity
 
             }
         });
-
-
-    }
-    public void changeImage() {
-        StorageReference storageReference = imageref.child(email+".jpg");
-        try {
-            final File localFile = File.createTempFile(email, "jpg");
-            imageref.getFile(localFile)
-                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                           // Uri download_url = taskSnapshot.getDownloadUrl();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle failed download
-                    // ...
-                }
-            });
-        }
-        catch (IOException e) {
-            e.printStackTrace();
         }
 
-    }
+
 
 
     @Override
@@ -251,6 +213,11 @@ public class user extends AppCompatActivity
                     .replace(R.id.contenedor,new notice())
                     .commit();
 
+        }
+        else if(id==R.id.nav_myprofile){
+            fragmentManager.beginTransaction()
+                    .replace(R.id.contenedor,new myprofile())
+                    .commit();
         }
         else if (id == R.id.nav_signout) {
 

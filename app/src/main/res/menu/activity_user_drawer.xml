@@ -5,8 +5,13 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_myprofile"
+            android:icon="@android:color/holo_red_dark"
+            android:title="My Profile" />
+
+        <item
             android:id="@+id/nav_timetable"
-            android:icon="@color/colorAccent"
+            android:icon="@android:color/holo_red_dark"
             android:title="Timetable" />
 
         <item
@@ -16,11 +21,11 @@
 
         <item
             android:id="@+id/nav_attendance"
-            android:icon="@android:color/holo_blue_bright"
+            android:icon="@android:color/holo_red_dark"
             android:title="Attendance" />
         <item
             android:id="@+id/nav_internalmarks"
-            android:icon="@android:color/holo_orange_dark"
+            android:icon="@android:color/holo_red_dark"
             android:title="Internal marks" />
         <item
             android:id="@+id/nav_notice"
