@@ -6,61 +6,73 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/linearlayout"
-        android:layout_width="0dp"
-        android:layout_height="439dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.521"
-        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/linearlayout2"
+        android:layout_width="359dp"
+        android:layout_height="374dp"
+        android:layout_marginTop="68dp"
+        android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.083">
+        tools:layout_editor_absoluteX="9dp">
 
-        <TextView
-            android:id="@+id/roll"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Roll No." />
+        <LinearLayout
+            android:id="@+id/linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.316">
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Name" />
+            <TextView
+                android:id="@+id/roll"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Roll No." />
 
-        <TextView
-            android:id="@+id/preabs"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Present" />
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Name" />
 
-        <TextView
-            android:id="@+id/percent"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/preabs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Present" />
+
+            <TextView
+                android:id="@+id/percent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="percentage" />
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/list_view1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="percentage" />
+            android:descendantFocusability="afterDescendants"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.246" />
 
     </LinearLayout>
-
-    <ListView
-        android:id="@+id/list_view1"
-        android:layout_width="366dp"
-        android:layout_height="381dp"
-        android:descendantFocusability="afterDescendants"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.246" />
 
     <Button
         android:id="@+id/submitattendance"

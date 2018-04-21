@@ -16,21 +16,21 @@
     <string name="title_activity_attendanceyear">attendanceyear</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string-array name="USERTYPE">
-        <item>USER TYPE</item>
+        <item>STUDENT OR STAFF:</item>
         <item>STUDENT</item>
         <item>STAFF</item>
 
     </string-array>
     <string-array name="YEAR">
-        <item>SELECT YEAR</item>
+        <item>YEAR OF STUDENT:</item>
         <item>1ST</item>
         <item>2ND</item>
         <item>3RD</item>
         <item>4TH</item>
 
     </string-array>
-    <string-array name="DEPARTMENT">
-        <item>DEPARTMENT</item>
+    <string-array name="DEPARTMENTSTUDENT">
+        <item>DEPARTMENT OF STUDENT:</item>
         <item>CSE 1</item>
         <item>CSE 2</item>
         <item>ECE 1</item>
@@ -39,7 +39,26 @@
         <item>ME</item>
         <item>IT</item>
         <item>AEIE</item>
+    </string-array>
+    <string-array name="DEPARTMENTSTAFF">
+        <item>DEPARTMENT OF STAFF:</item>
+        <item>CSE </item>
+        <item>ECE </item>
+        <item>EE</item>
+        <item>ME</item>
+        <item>IT</item>
+        <item>AEIE</item>
         <item>BSH</item>
     </string-array>
+    <string-array name="QUALIFICATION">
+        <item>QUALIFICATION OF STAFF:</item>
+        <item>MSc</item>
+        <item>M.E</item>
+        <item>M.A</item>
+        <item>MTech </item>
+        <item>PhD</item>
+        <item>Others</item>
+    </string-array>
+
 
 </resources>

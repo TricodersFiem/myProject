@@ -1,5 +1,6 @@
 package com.example.dhritidhruve.app;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -7,6 +8,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,44 +21,65 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import org.w3c.dom.Text;
-
-import java.util.HashMap;
-import java.util.Map;
-
 public class register extends AppCompatActivity {
     FirebaseFirestore db;
     private FirebaseAuth mAuth;
-    EditText name, email, pass, collegeId;
-    EditText qualification, designation;
-    Spinner usertype, year, department;
-    String type, currentYear, currentDepartment;
+    EditText name, email, pass, collegeId,designation;
+    Spinner usertype, year, department,qualification;
+    String type, currentYear, currentDepartment,currentQuali;
     Student current;
     Staff currentStaff;
     ImageView imageView;
     String photoId;
+    TextView checkimage;
     public static final int RESULT_LOAD_IMAGE = 1;
     private StorageReference mStorageRef;
+    int k=0;
+    Uri selectedImage;
 
     public void signup(View view) {
-        if (name.getText().toString().equals("") || email.getText().toString().equals("") || pass.getText().toString().equals("") || collegeId.getText().toString().equals("") || currentDepartment.equals("")){
-            Toast.makeText(register.this, "empty input fields", Toast.LENGTH_SHORT).show();
-        } else {
+
+        if(k<8) {
+             if (name.getText().toString().equals(""))
+                Toast.makeText(register.this, "ENTER VALID NAME", Toast.LENGTH_LONG).show();
+             else if (email.getText().toString().equals(""))
+                 Toast.makeText(register.this, "ENTER VALID EMAIL ID", Toast.LENGTH_LONG).show();
+             else if (pass.getText().toString().equals(""))
+                 Toast.makeText(register.this, "ENTER VALID PASSWORD", Toast.LENGTH_LONG).show();
+             else if (collegeId.getText().toString().equals(""))
+                 Toast.makeText(register.this, "ENTER VALID COLLEGE ID", Toast.LENGTH_LONG).show();
+             else if (type.equals(""))
+                 Toast.makeText(register.this, "ENTER STUDENT OR STAFF TYPE USER", Toast.LENGTH_LONG).show();
+             else if (type.equals("STUDENT") && currentYear.equals(""))
+                 Toast.makeText(register.this, "ENTER VALID YEAR OF STUDENT", Toast.LENGTH_LONG).show();
+             else if (type.equals("STAFF") && designation.getText().toString().equals(""))
+                 Toast.makeText(register.this, "ENTER VALID USER TYPE", Toast.LENGTH_LONG).show();
+             else if (type.equals("STAFF") && currentQuali.equals(""))
+                 Toast.makeText(register.this, "ENTER VALID QUALIFICATION OF STAFF", Toast.LENGTH_LONG).show();
+             else if (currentDepartment.equals(""))
+                 Toast.makeText(register.this, "ENTER VALID DEPARTMENT OF STAFF", Toast.LENGTH_LONG).show();
+             else if (selectedImage==null)
+                Toast.makeText(register.this, "ENTER VALID IMAGE", Toast.LENGTH_LONG).show();
+        }
+        else {
             final ProgressDialog progressDialog = ProgressDialog.show(register.this, "Please wait...", "Processing...", true);
+
             db = FirebaseFirestore.getInstance();
 
             if (type.equals("STUDENT")) {
-                current = new Student(name.getText().toString(), collegeId.getText().toString(), email.getText().toString(), currentYear, currentDepartment,photoId);
-                db.collection("Person").document("STUDENT").set(current)
+                current = new Student(name.getText().toString(), collegeId.getText().toString(), email.getText().toString(), currentYear, currentDepartment, photoId);
+                db.collection("Person").document("STUDENT "+email.getText().toString()).set(current)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -70,14 +94,14 @@ public class register extends AppCompatActivity {
                         });
 
             } else {
-                currentStaff=new Staff(name.getText().toString(),collegeId.getText().toString(),email.getText().toString(),currentDepartment,qualification.getText().toString(),designation.getText().toString(), photoId);
-                db.collection("Person").document("STAFF").set(currentStaff)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(register.this, "User Successfully added", Toast.LENGTH_SHORT).show();
-                    }
-                })
+                currentStaff = new Staff(name.getText().toString(), collegeId.getText().toString(), email.getText().toString(), currentDepartment, currentQuali, designation.getText().toString(), photoId);
+                db.collection("Person").document("STAFF "+email.getText().toString()).set(currentStaff)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(register.this, "User Successfully added", Toast.LENGTH_SHORT).show();
+                            }
+                        })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
@@ -91,46 +115,253 @@ public class register extends AppCompatActivity {
             finish();
         }
     }
+
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==RESULT_LOAD_IMAGE && resultCode==RESULT_OK && data!=null ){
-            Uri selectedImage=data.getData();
-            StorageReference imgeref =mStorageRef.child(email.getText().toString()+".jpg");
-            imgeref.putFile(selectedImage)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                            photoId = downloadUrl.toString();
-                        }
-                    });
-            // upload to storage
-
-            imageView.setImageURI(selectedImage);
-
+            selectedImage=data.getData();
+            StorageReference imgeref = mStorageRef.child(email.getText().toString()+".jpg");
+            if (selectedImage != null) {
+                imgeref.putFile(selectedImage)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                                k++;
+                                if (downloadUrl != null) {
+                                    photoId = downloadUrl.toString();
+                                }
+                            }
+                        });
+                imageView.setImageURI(selectedImage);
+                checkimage.setText("Image Uploaded");
+            }
+            else {
+                Toast.makeText(register.this, "PLEASE SELECT AN IMAGE", Toast.LENGTH_LONG).show();
+            }
+            }
         }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register2);
-        //Initialization of the instance variable
+        mAuth = FirebaseAuth.getInstance();
         name = (EditText) findViewById(R.id.name);
-        email = (EditText) findViewById(R.id.email);
-        pass = (EditText) findViewById(R.id.password);
-        collegeId = (EditText) findViewById(R.id.collegeid);
-        qualification = (EditText) findViewById(R.id.qualification);
-        designation = (EditText) findViewById(R.id.designation);
-        imageView=(ImageView)findViewById(R.id.image);
-        mStorageRef = FirebaseStorage.getInstance().getReference();//Firebase storage variable initialization
-        Button pic=(Button)findViewById(R.id.uploadpic);//Upload the picture
-        department = (Spinner) findViewById(R.id.department);
-        year = (Spinner) findViewById(R.id.year);
-        usertype = (Spinner) findViewById(R.id.usertype);
+        name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(name.getText().toString().length()>0) {
+                    String nameip = name.getText().toString();
+                    if (nameip.charAt(0) < 65 || nameip.charAt(0) > 90)
+                        name.setError("First character of first name should be in uppercase");
+                    else {
+                        int space = nameip.indexOf(" ");
+                        String lastname = nameip.substring(space + 1,name.getText().toString().length());
+                        if(lastname.equals(""))
+                            name.setError("Enter last name with first character in uppercase");
+                        else if (lastname.charAt(0) < 65 || lastname.charAt(0) > 90)
+                            name.setError("First character of last name should be in uppercase");
+                        k++;
 
-        //button clk for uploading picture in the database
+                    }
+                }
+            }
+        });
+        email = (EditText) findViewById(R.id.email);
+        final FirebaseUser user = mAuth.getCurrentUser();
+        email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void afterTextChanged(Editable editable) {
+              /* Button verifyEmail = (Button) findViewById(R.id.verifyemail);
+                verifyEmail.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        assert user != null;
+                        findViewById(R.id.verifyemail).setEnabled(false);
+                        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                        user.sendEmailVerification()
+                                .addOnCompleteListener(register.this, new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(register.this, "Verification email sent to " + user.getEmail(), Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Log.e("TAG", "sendEmailVerification", task.getException());
+                                            Toast.makeText(register.this, "Failed to send verification email.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                    }
+                });
+                TextView mStatusTextView = (TextView) findViewById(R.id.verifedornot);
+                assert user != null;
+                if (user.isEmailVerified()) {
+                    mStatusTextView.setText("Verified");
+                    findViewById(R.id.verifyemail).setEnabled(true);
+                } else
+                    email.setError("INVALID EMAIL ID");*/
+              if(email.getText().toString().length()!=0)
+                  k++;
+              else
+                  email.setError("EMPTY EMAIL FIELD");
+
+            }
+        });
+
+        pass = (EditText) findViewById(R.id.password);
+        pass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                if (pass.getText().toString().length()<6)
+                    pass.setError("INPUT PASSWORD ATLEAST 6 CHARACTERS LONG");
+                if(pass.getText().toString().length()!=0)
+                    k++;
+            }
+        });
+        collegeId = (EditText) findViewById(R.id.collegeid);
+        collegeId.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(collegeId.getText().toString().length()!=0)
+                    k++;
+
+            }
+        });
+        department = (Spinner) findViewById(R.id.department);
+        usertype = (Spinner) findViewById(R.id.usertype);
+        qualification = (Spinner) findViewById(R.id.qualification);
+        year = (Spinner) findViewById(R.id.year);
+        designation = (EditText) findViewById(R.id.designation);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.USERTYPE, android.R.layout.simple_spinner_item);
+        usertype.setAdapter(adapter);
+        usertype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                type="";
+                if(i==1)
+                {
+                    type = adapterView.getItemAtPosition(i).toString();
+                    k++;
+                    year.setVisibility(View.VISIBLE);
+                    ArrayAdapter<CharSequence> yearadapt = ArrayAdapter.createFromResource(register.this, R.array.YEAR, android.R.layout.simple_spinner_item);
+                    year.setAdapter(yearadapt);
+                    year.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            currentYear = adapterView.getItemAtPosition(i).toString();
+                            if (i == 0) currentYear ="";
+                            else k++;
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+                    qualification.setVisibility(View.GONE);
+                    designation.setVisibility(View.GONE);
+                    ArrayAdapter<CharSequence> depadapt = ArrayAdapter.createFromResource(register.this, R.array.DEPARTMENTSTUDENT, android.R.layout.simple_spinner_item);
+                    department.setAdapter(depadapt);
+                    department.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            currentDepartment = adapterView.getItemAtPosition(i).toString();
+                            if (i == 0)
+                                currentDepartment = "";
+                                else k++;
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+                }
+                else if(i==2)
+                {
+                    type = adapterView.getItemAtPosition(i).toString();
+                    k++;
+                    year.setVisibility(View.GONE);
+                    qualification.setVisibility(View.VISIBLE);
+                    ArrayAdapter<CharSequence> qualiadapt = ArrayAdapter.createFromResource(register.this, R.array.QUALIFICATION, android.R.layout.simple_spinner_item);
+                    qualification.setAdapter(qualiadapt);
+                    qualification.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            currentQuali = adapterView.getItemAtPosition(i).toString();
+                            if (i == 0) currentQuali ="";
+                            else k++;
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+
+                    designation.setVisibility(View.VISIBLE);
+                    designation.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+                                if(!designation.getText().toString().equals(""))
+                                    k++;
+
+                        }
+                    });
+                    final ArrayAdapter<CharSequence> depadapt = ArrayAdapter.createFromResource(register.this, R.array.DEPARTMENTSTAFF, android.R.layout.simple_spinner_item);
+                    department.setAdapter(depadapt);
+                    department.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            currentDepartment = adapterView.getItemAtPosition(i).toString();
+                            if (i == 0) currentDepartment = "";
+                            else k++;
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
+                }
+
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        imageView=(ImageView)findViewById(R.id.image);
+        checkimage=(TextView)findViewById(R.id.checkimage);
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        Button pic=(Button)findViewById(R.id.uploadpic);
         pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,69 +369,7 @@ public class register extends AppCompatActivity {
                 startActivityForResult(i,RESULT_LOAD_IMAGE);
             }
         });
-
-        //Setting the adapter for department (spinner)
-        ArrayAdapter depadapt = ArrayAdapter.createFromResource(this, R.array.DEPARTMENT, android.R.layout.simple_spinner_item);
-        department.setAdapter(depadapt);
-        department.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                currentDepartment=adapterView.getItemAtPosition(i).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        //Spinner for year
-        ArrayAdapter yearadapt = ArrayAdapter.createFromResource(this, R.array.YEAR, android.R.layout.simple_spinner_item);
-        year.setAdapter(yearadapt);
-        year.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    currentYear=adapterView.getItemAtPosition(i).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        //Spinner for usertype
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.USERTYPE, android.R.layout.simple_spinner_item);
-        usertype.setAdapter(adapter);
-        usertype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                type = adapterView.getItemAtPosition(i).toString();
-                if(i==1)
-                {
-
-                    year.setVisibility(View.VISIBLE);
-                    qualification.setVisibility(View.GONE);
-                    designation.setVisibility(View.GONE);
-                    type = adapterView.getItemAtPosition(i).toString();
-                }
-                else if(i==2)
-                {
-                    year.setVisibility(View.GONE);
-                    qualification.setVisibility(View.VISIBLE);
-                    designation.setVisibility(View.VISIBLE);
-                    type = adapterView.getItemAtPosition(i).toString();
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-        mAuth = FirebaseAuth.getInstance();
-
+        }
     }
-}
+
 
