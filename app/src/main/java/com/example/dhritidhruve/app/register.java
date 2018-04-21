@@ -55,7 +55,7 @@ public class register extends AppCompatActivity {
 
             if (type.equals("STUDENT")) {
                 current = new Student(name.getText().toString(), collegeId.getText().toString(), email.getText().toString(), currentYear, currentDepartment,photoId);
-                db.collection("Person").document("STUDENT").set(current)
+                db.collection("Person").document("STUDENT "+ email.getText().toString()).set(current)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -71,7 +71,7 @@ public class register extends AppCompatActivity {
 
             } else {
                 currentStaff=new Staff(name.getText().toString(),collegeId.getText().toString(),email.getText().toString(),currentDepartment,qualification.getText().toString(),designation.getText().toString(), photoId);
-                db.collection("Person").document("STAFF").set(currentStaff)
+                db.collection("Person").document("STAFF " + email.getText().toString()).set(currentStaff)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

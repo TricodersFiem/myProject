@@ -1,5 +1,6 @@
 package com.example.dhritidhruve.app;
 
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -51,7 +52,9 @@ public class timetable extends Fragment{
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (document.exists()) {
-                                    if (document.getId().equals("STUDENT")) {
+                                    String docs = document.getId();
+                                    String temp = docs.split(" ")[0];
+                                    if (temp.equals("STUDENT")) {
                                         student = document.toObject(Student.class);
                                         year = student.getYear();
                                         uploadTimetableStudent();
@@ -98,15 +101,12 @@ public class timetable extends Fragment{
         });
         timetablepic.setVisibility(View.VISIBLE);
     }
-
-
-
-
     View view;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view= inflater.inflate(R.layout.timetable,container,false);
+      //  getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         return view;
     }
 }

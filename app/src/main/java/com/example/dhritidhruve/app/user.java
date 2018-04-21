@@ -101,7 +101,9 @@ public class user extends AppCompatActivity
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (document.exists()) {
-                                    if (document.getId().equals("STUDENT")) {
+                                    String docs = document.getId();
+                                    String temp = docs.split(" ")[0];
+                                    if (temp.equals("STUDENT")) {
                                         Log.d("MyTag", "passed");
                                         student = document.toObject(Student.class);
                                         //Log.d("msg",student.getPhotoId());

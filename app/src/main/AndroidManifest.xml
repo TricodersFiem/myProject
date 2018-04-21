@@ -10,23 +10,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashScreen">
+        <activity android:name=".SplashScreen"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".register" />
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".register"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user"
             android:label="@string/title_activity_user"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".checkattendance" />
-        <activity android:name=".checkinternalmarks" />
-        <activity android:name=".giveattendance" />
-        <activity android:name=".giveinternalmarks" />
+
+        <activity android:name=".checkattendance"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".checkinternalmarks"
+            android:screenOrientation="portrait"/>
+
+
+
     </application>
 
 </manifest>
