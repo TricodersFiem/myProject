@@ -259,6 +259,11 @@ public class user extends AppCompatActivity
             startActivity(intent);
             finish();
         }
+        else if(id==R.id.nav_subject){
+            fragmentManager.beginTransaction()
+                    .replace(R.id.contenedor,new SubjectAdd())
+                    .commit();
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
