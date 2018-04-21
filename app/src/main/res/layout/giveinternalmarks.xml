@@ -12,7 +12,7 @@
         android:id="@+id/linearlayout2"
         android:layout_width="match_parent"
         android:layout_height="381dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="60dp"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints"
@@ -69,6 +69,7 @@
 
         <ListView
             android:id="@+id/list_view1"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:descendantFocusability="beforeDescendants"
