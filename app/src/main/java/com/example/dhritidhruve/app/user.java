@@ -82,7 +82,9 @@ public class user extends AppCompatActivity
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (document.exists()) {
-                                    if (document.getId().equals("STUDENT")) {
+                                    String docs = document.getId();
+                                    String temp = docs.split(" ")[0];
+                                    if (temp.equals("STUDENT")) {
                                         Log.d("MyTag", "passed");
                                         student = document.toObject(Student.class);
                                         //Log.d("msg",student.getPhotoId());
@@ -223,6 +225,11 @@ public class user extends AppCompatActivity
             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
             startActivity(intent);
             finish();
+        }
+        else if(id==R.id.nav_subject){
+            fragmentManager.beginTransaction()
+                    .replace(R.id.contenedor,new SubjectAdd())
+                    .commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

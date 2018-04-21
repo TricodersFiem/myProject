@@ -13,6 +13,12 @@
             android:id="@+id/nav_timetable"
             android:icon="@android:color/holo_red_dark"
             android:title="Timetable" />
+
+        <item
+            android:id="@+id/nav_subject"
+            android:icon="@color/colorAccent"
+            android:title="Add Subject" />
+
         <item
             android:id="@+id/nav_attendance"
             android:icon="@android:color/holo_red_dark"
