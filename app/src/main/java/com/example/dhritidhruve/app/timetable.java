@@ -106,7 +106,6 @@ public class timetable extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view= inflater.inflate(R.layout.timetable,container,false);
-      //  getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         return view;
     }
 }

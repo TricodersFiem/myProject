@@ -8,10 +8,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 
-public class SubjectAdd extends Fragment {
+public class SubjectAdd extends Fragment implements ExampleDialog.ExampleDialogListener {
 
+    ArrayList<SubjectDesign> subjects;
+    SubjectAdapter subjectAdapter;
+
+    @Override
+    public void applyTexts(String transferDepartment, String transferYear, String subjectName, String subjectCode) {
+        subjects.add(new SubjectDesign(transferDepartment,transferYear,subjectName,subjectCode));
+        subjectAdapter.notifyDataSetChanged();
+    }
 
     private Button addSubject;
     @Override
@@ -26,7 +37,10 @@ public class SubjectAdd extends Fragment {
                 openDialog();
             }
         });
-
+        subjects = new ArrayList<SubjectDesign>();
+        subjectAdapter = new SubjectAdapter(getActivity(), subjects);
+        ListView listView = (ListView) view.findViewById(R.id.subjectAddList);
+        listView.setAdapter(subjectAdapter);
         return view;
     }
 
