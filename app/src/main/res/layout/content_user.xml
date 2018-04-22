@@ -75,19 +75,20 @@
             <TextView
                 android:id="@+id/year"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/designation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/qualification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:visibility="gone" />
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 

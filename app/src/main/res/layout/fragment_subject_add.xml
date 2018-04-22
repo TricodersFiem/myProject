@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="@id/addSubject"
-            tools:layout_editor_absoluteY="128dp" />
+            tools:layout_editor_absoluteY="55dp" />
 
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>
