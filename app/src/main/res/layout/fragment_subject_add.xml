@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SubjectAdd">
-
-
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:id="@+id/constrntLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="60dp">
 
         <Button
             android:id="@+id/addSubject"
@@ -23,9 +23,7 @@
         <ListView
             android:id="@+id/subjectAddList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@id/addSubject"
-            tools:layout_editor_absoluteY="55dp" />
+            android:layout_height="wrap_content" />
 
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 </FrameLayout>
