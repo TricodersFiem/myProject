@@ -16,21 +16,32 @@
     <string name="title_activity_attendanceyear">attendanceyear</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string-array name="USERTYPE">
-        <item>STUDENT OR STAFF:</item>
+        <item>You are:</item>
         <item>STUDENT</item>
         <item>STAFF</item>
 
     </string-array>
     <string-array name="YEAR">
-        <item>YEAR OF STUDENT:</item>
+        <item>YEAR:</item>
         <item>1ST</item>
         <item>2ND</item>
         <item>3RD</item>
         <item>4TH</item>
 
     </string-array>
+    <string-array name="DEPARTMENT">
+        <item>DEPARTMENT:</item>
+        <item>CSE 1</item>
+        <item>CSE 2</item>
+        <item>ECE 1</item>
+        <item>ECE 2</item>
+        <item>EE</item>
+        <item>ME</item>
+        <item>IT</item>
+        <item>AEIE</item>
+    </string-array>
     <string-array name="DEPARTMENTSTUDENT">
-        <item>DEPARTMENT OF STUDENT:</item>
+        <item>DEPARTMENT:</item>
         <item>CSE 1</item>
         <item>CSE 2</item>
         <item>ECE 1</item>
