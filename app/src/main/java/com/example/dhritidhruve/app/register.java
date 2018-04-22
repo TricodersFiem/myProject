@@ -175,50 +175,53 @@ public class register extends AppCompatActivity {
             }
         });
         email = (EditText) findViewById(R.id.email);
-        final FirebaseUser user = mAuth.getCurrentUser();
+
         email.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-            @SuppressLint("SetTextI18n")
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
             @Override
             public void afterTextChanged(Editable editable) {
-              /* Button verifyEmail = (Button) findViewById(R.id.verifyemail);
-                verifyEmail.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        assert user != null;
-                        findViewById(R.id.verifyemail).setEnabled(false);
-                        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                        user.sendEmailVerification()
-                                .addOnCompleteListener(register.this, new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task task) {
-                                        if (task.isSuccessful()) {
-                                            Toast.makeText(register.this, "Verification email sent to " + user.getEmail(), Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            Log.e("TAG", "sendEmailVerification", task.getException());
-                                            Toast.makeText(register.this, "Failed to send verification email.", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
-                    }
-                });
-                TextView mStatusTextView = (TextView) findViewById(R.id.verifedornot);
-                assert user != null;
-                if (user.isEmailVerified()) {
-                    mStatusTextView.setText("Verified");
-                    findViewById(R.id.verifyemail).setEnabled(true);
-                } else
-                    email.setError("INVALID EMAIL ID");*/
-              if(email.getText().toString().length()!=0)
-                  k++;
-              else
-                  email.setError("EMPTY EMAIL FIELD");
-
+                if (email.getText().toString().length() == 0)
+                    email.setError("EMPTY EMAIL FIELD");
             }
         });
+        Button verifyEmail = (Button) findViewById(R.id.verifyemail);
+        verifyEmail.setOnClickListener(new View.OnClickListener() {
+                                           @Override
+                                           public void onClick(View view) {
+                                               findViewById(R.id.verifyemail).setEnabled(false);
+                                                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                                               final FirebaseUser user = mAuth.getCurrentUser();
+                                               if (user != null) {
+                                                   user.sendEmailVerification()
+                                                           .addOnCompleteListener(register.this, new OnCompleteListener<Void>() {
+                                                               @Override
+                                                               public void onComplete(@NonNull Task<Void> task) {
+                                                                   if (task.isSuccessful())
+                                                                       Toast.makeText(register.this, "Verification email sent to " + user.getEmail(), Toast.LENGTH_LONG).show();
+                                                                   else {
+                                                                       Log.e("TAG", "sendEmailVerification", task.getException());
+                                                                       Toast.makeText(register.this, "Failed to send verification email.", Toast.LENGTH_LONG).show();
+                                                                   }
+                                                               }
+                                                           });
+                                                   TextView mStatusTextView = (TextView) findViewById(R.id.verifedornot);
+                                                   if (user.isEmailVerified()) {
+                                                       mStatusTextView.setText("Verified");
+                                                       findViewById(R.id.verifyemail).setEnabled(true);
+                                                       k++;
+                                                   } else
+                                                       email.setError("INVALID EMAIL ID");
+
+                                               }
+                                           }
+                                       } );
 
         pass = (EditText) findViewById(R.id.password);
         pass.addTextChangedListener(new TextWatcher() {

@@ -84,17 +84,19 @@ public class InternalMarksAdapter extends ArrayAdapter<InternalMarksDesign> {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(s.toString().length()>0)
                     holder.internalMarks.setTest1(Integer.parseInt(s.toString()));
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                /*if (s.toString().length() > 0) {
+                if (s.toString().length() > 0) {
                     holder.internalMarks.setTest1(Integer.parseInt(s.toString()));
+                    holder.internalMarks.setTest2(Integer.parseInt(s.toString()));
                     int val1 = Integer.parseInt(holder.test1View.getText().toString());
                     int val2 = Integer.parseInt(holder.test2View.getText().toString());
                     holder.internalMarks.setTotal(val1 + val2);
                     holder.totalTextView.setText(String.valueOf(val1 + val2));
-                }*/
+                }
             }
         });
     }
@@ -115,6 +117,7 @@ public class InternalMarksAdapter extends ArrayAdapter<InternalMarksDesign> {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().length() > 0) {
+                    holder.internalMarks.setTest1(Integer.parseInt(s.toString()));
                     holder.internalMarks.setTest2(Integer.parseInt(s.toString()));
                     int val1 = Integer.parseInt(holder.test1View.getText().toString());
                     int val2 = Integer.parseInt(holder.test2View.getText().toString());
