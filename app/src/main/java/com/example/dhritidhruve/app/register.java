@@ -83,7 +83,7 @@ public class register extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(register.this, "User Successfully added", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(register.this, "USER SUCCESSFULLY ADDED", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -99,7 +99,7 @@ public class register extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(register.this, "User Successfully added", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(register.this, "USER SUCCESSFULLY ADDED", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -136,7 +136,7 @@ public class register extends AppCompatActivity {
                             }
                         });
                 imageView.setImageURI(selectedImage);
-                checkimage.setText("Image Uploaded");
+                checkimage.setText("IMAGE UPLOADED");
             }
             else {
                 Toast.makeText(register.this, "PLEASE SELECT AN IMAGE", Toast.LENGTH_LONG).show();
@@ -189,39 +189,9 @@ public class register extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 if (email.getText().toString().length() == 0)
                     email.setError("EMPTY EMAIL FIELD");
+                else k++;
             }
         });
-        Button verifyEmail = (Button) findViewById(R.id.verifyemail);
-        verifyEmail.setOnClickListener(new View.OnClickListener() {
-                                           @Override
-                                           public void onClick(View view) {
-                                               findViewById(R.id.verifyemail).setEnabled(false);
-                                                FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                                               final FirebaseUser user = mAuth.getCurrentUser();
-                                               if (user != null) {
-                                                   user.sendEmailVerification()
-                                                           .addOnCompleteListener(register.this, new OnCompleteListener<Void>() {
-                                                               @Override
-                                                               public void onComplete(@NonNull Task<Void> task) {
-                                                                   if (task.isSuccessful())
-                                                                       Toast.makeText(register.this, "Verification email sent to " + user.getEmail(), Toast.LENGTH_LONG).show();
-                                                                   else {
-                                                                       Log.e("TAG", "sendEmailVerification", task.getException());
-                                                                       Toast.makeText(register.this, "Failed to send verification email.", Toast.LENGTH_LONG).show();
-                                                                   }
-                                                               }
-                                                           });
-                                                   TextView mStatusTextView = (TextView) findViewById(R.id.verifedornot);
-                                                   if (user.isEmailVerified()) {
-                                                       mStatusTextView.setText("Verified");
-                                                       findViewById(R.id.verifyemail).setEnabled(true);
-                                                       k++;
-                                                   } else
-                                                       email.setError("INVALID EMAIL ID");
-
-                                               }
-                                           }
-                                       } );
 
         pass = (EditText) findViewById(R.id.password);
         pass.addTextChangedListener(new TextWatcher() {

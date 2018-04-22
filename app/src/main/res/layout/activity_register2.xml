@@ -39,28 +39,6 @@
             android:hint="Email id"
             android:inputType="textEmailAddress" />
 
-        <LinearLayout
-            android:id="@+id/ll"
-            android:layout_width="match_parent"
-            android:layout_height="38dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/verifyemail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="VERIFY EMAIL" />
-
-            <TextView
-                android:id="@+id/verifedornot"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Not Verified" />
-
-        </LinearLayout>
-
         <EditText
             android:id="@+id/password"
             android:layout_width="match_parent"

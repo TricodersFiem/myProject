@@ -31,9 +31,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void signIn(View view) {
-        if (txtEmail.getText().toString().equals("") || txtPassword.getText().toString().equals("")) {
-            Toast.makeText(MainActivity.this, "empty input fields", Toast.LENGTH_SHORT).show();
-        } else {
+        if (txtEmail.getText().toString().equals("") ) {
+            Toast.makeText(MainActivity.this, "EMPTY EMAIL ID FIELD", Toast.LENGTH_SHORT).show();
+        }
+        else if(txtPassword.getText().toString().equals("")){
+            Toast.makeText(MainActivity.this, "EMPTY PASSWORD FIELD", Toast.LENGTH_SHORT).show();
+        }
+        else {
             final ProgressDialog progressDialog = ProgressDialog.show(MainActivity.this, "Please wait...", "Processing...", true);
             mAuth.signInWithEmailAndPassword(txtEmail.getText().toString().trim(), txtPassword.getText().toString().trim())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -42,11 +46,23 @@ public class MainActivity extends AppCompatActivity {
 
                             progressDialog.dismiss();
                             if (task.isSuccessful()) {
-                                Toast.makeText(MainActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
-                                Intent i = new Intent(getApplicationContext(), user.class);
-                                startActivity(i);
-                                finish();
-                                FirebaseUser user = mAuth.getCurrentUser();
+                                Toast.makeText(MainActivity.this, "Login Successful ", Toast.LENGTH_SHORT).show();
+                                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                                final FirebaseUser user = mAuth.getCurrentUser();
+                                if(!user.isEmailVerified()) {
+
+                                    Toast.makeText(MainActivity.this, "PROCEED TO VERIFY YOUR ACCOUNT " + user.getEmail(), Toast.LENGTH_LONG).show();
+                                    Intent i = new Intent(getApplicationContext(), verifyEmail.class);
+                                    startActivity(i);
+                                    finish();
+                                }
+                                else
+                                {
+                                    Toast.makeText(MainActivity.this, "SUCCESSFUL SIGN..CONGRATULATIONS " + user.getEmail(), Toast.LENGTH_LONG).show();
+                                    Intent intent=new Intent(getApplicationContext(),user.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
                             } else {
                                 Toast.makeText(getApplicationContext(), task.getException().getMessage(),
                                         Toast.LENGTH_SHORT).show();
