@@ -27,12 +27,11 @@ class SubjectAdapter extends ArrayAdapter<SubjectDesign> {
         TextView department, year, subName, subCode;
         SubjectDesign subjects;
 
-        @SuppressLint("ViewHolder")
+
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             View listItemView = convertView;
-            com.example.dhritidhruve.app.attendanceadapter.ViewHolder holder = new com.example.dhritidhruve.app.attendanceadapter.ViewHolder();
             LayoutInflater inflator = ((Activity) context).getLayoutInflater();
             listItemView = inflator.inflate(R.layout.linear_layout_subject, parent, false);
 
@@ -47,7 +46,6 @@ class SubjectAdapter extends ArrayAdapter<SubjectDesign> {
             subName.setText(subjects.getSubjectName());
             subCode.setText(subjects.getSubjectCode());
 
-            listItemView.setTag(holder);
 
 
             return listItemView;

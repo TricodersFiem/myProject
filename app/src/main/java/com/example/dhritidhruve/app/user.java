@@ -118,8 +118,8 @@ public class user extends AppCompatActivity
         designation.setVisibility(View.GONE);
         qualification.setVisibility(View.GONE);
         name.setText("Name: " + student.getName());
-        useremail.setText(student.getEmail());
-        username.setText(student.getName());
+       // useremail.setText(student.getEmail());
+       // username.setText(student.getName());
         department.setText("Department: " + student.getDepartment());
         year.setText("Year: " + student.getYear());
         collegeid.setText("College Id: " + student.getCollegeId());
