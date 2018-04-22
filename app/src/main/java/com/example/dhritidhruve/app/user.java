@@ -118,8 +118,8 @@ public class user extends AppCompatActivity
         designation.setVisibility(View.GONE);
         qualification.setVisibility(View.GONE);
         name.setText("Name: " + student.getName());
-      //  useremail.setText(student.getEmail());
-      //  username.setText(student.getName());
+        useremail.setText(""+student.getEmail());
+        username.setText(""+student.getName());
         department.setText("Department: " + student.getDepartment());
         year.setText("Year: " + student.getYear());
         collegeid.setText("College Id: " + student.getCollegeId());
@@ -134,8 +134,8 @@ public class user extends AppCompatActivity
         collegeid.setText("College Id: " + staff.getCollegeId());
         qualification.setText("Qualification: "+ staff.getQualification());
         year.setVisibility(View.GONE);
-        //seremail.setText(staff.getEmail());
-        //username.setText(staff.getName());
+        useremail.setText(""+staff.getEmail());
+        username.setText(""+staff.getName());
         changeImageByUrl();
 
     }
