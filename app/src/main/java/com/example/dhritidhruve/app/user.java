@@ -69,7 +69,7 @@ public class user extends AppCompatActivity
         year = (TextView) findViewById(R.id.year);
         collegeid = (TextView) findViewById(R.id.collegeId);
         userpic = (ImageView) findViewById(R.id.userpic);
-        useremail=(TextView)findViewById(R.id.usernamenav);
+        useremail=(TextView)findViewById(R.id.useridnav);
         username=(TextView)findViewById(R.id.usernamenav);
 
         db = FirebaseFirestore.getInstance();
@@ -118,8 +118,8 @@ public class user extends AppCompatActivity
         designation.setVisibility(View.GONE);
         qualification.setVisibility(View.GONE);
         name.setText("Name: " + student.getName());
-       // useremail.setText(student.getEmail());
-       // username.setText(student.getName());
+        useremail.setText(""+student.getEmail());
+        username.setText(""+student.getName());
         department.setText("Department: " + student.getDepartment());
         year.setText("Year: " + student.getYear());
         collegeid.setText("College Id: " + student.getCollegeId());
@@ -134,6 +134,8 @@ public class user extends AppCompatActivity
         collegeid.setText("College Id: " + staff.getCollegeId());
         qualification.setText("Qualification: "+ staff.getQualification());
         year.setVisibility(View.GONE);
+        useremail.setText(""+staff.getEmail());
+        username.setText(""+staff.getName());
         changeImageByUrl();
 
     }
@@ -179,6 +181,8 @@ public class user extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
+            Intent intent= new Intent(getApplicationContext(),user.getClass());
+            startActivity(intent);
             return true;
         }
 
@@ -214,7 +218,7 @@ public class user extends AppCompatActivity
                     .commit();
 
         }
-        else if(id==R.id.nav_myprofile){
+         if(id==R.id.nav_myprofile){
             fragmentManager.beginTransaction()
                     .replace(R.id.contenedor,new myprofile())
                     .commit();

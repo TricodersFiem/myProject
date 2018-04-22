@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -30,7 +31,7 @@ import com.google.firebase.storage.StorageReference;
 
 public class timetable extends Fragment{
     FirebaseFirestore db;
-    String email,year;
+    String email,year,collegeId;
     FirebaseUser user;
     StorageReference imageref;
     ImageView timetablepic;
@@ -61,6 +62,7 @@ public class timetable extends Fragment{
 
                                     } else {
                                         staff = document.toObject(Staff.class);
+                                        collegeId = staff.getCollegeId();
                                         uploadTimetableStaff();
                                     }
                                 }
@@ -75,7 +77,6 @@ public class timetable extends Fragment{
     }
     public void uploadTimetableStudent(){
         timetablepic = (ImageView) getView().findViewById(R.id.timetablepic);
-
         imageref.child(year+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -85,12 +86,44 @@ public class timetable extends Fragment{
 
             }
         });
-        timetablepic.setVisibility(View.VISIBLE);
+
+        final Button change =(Button)getView().findViewById(R.id.change);
+        change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(((Button)view).getText().toString().equals("NEXT")) {
+                    imageref.child(year + "(1).jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Glide.with(getActivity())
+                                    .load(uri)
+                                    .into(timetablepic);
+
+                        }
+                    });
+                    change.setText("PREVIOUS");
+                }
+                else {
+                    imageref.child(year+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Glide.with(getActivity())
+                                    .load(uri)
+                                    .into(timetablepic);
+
+                        }
+                    });
+                    change.setText("NEXT");
+                }
+            }
+        });
+
+
         }
         public void uploadTimetableStaff(){
         timetablepic = (ImageView) getView().findViewById(R.id.timetablepic);
 
-        imageref.child(year +".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        imageref.child(collegeId+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Glide.with(getActivity())
@@ -99,7 +132,6 @@ public class timetable extends Fragment{
 
             }
         });
-        timetablepic.setVisibility(View.VISIBLE);
     }
     View view;
     @Nullable

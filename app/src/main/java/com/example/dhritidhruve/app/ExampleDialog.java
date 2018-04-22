@@ -60,7 +60,7 @@ public class ExampleDialog extends AppCompatDialogFragment {
                 });
 
         //Set the spinner for department
-        ArrayAdapter depadapt = ArrayAdapter.createFromResource(getActivity(), R.array.DEPARTMENT, android.R.layout.simple_spinner_item);
+        ArrayAdapter depadapt = ArrayAdapter.createFromResource(getActivity(), R.array.DEPARTMENTSTUDENT, android.R.layout.simple_spinner_item);
         department.setAdapter(depadapt);
         department.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
