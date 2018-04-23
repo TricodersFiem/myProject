@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,19 +14,17 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 
 public class checkinternalmarks extends Fragment {
 
     View view;
-    ArrayList<studentInternalDesign> studentInternalDesign;
-    studentInternalAdapter studentInternalAdapter;
+    ArrayList<studentInternalDesign> StudentInternal;
+    studentInternalAdapter studentAdapter;
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         FirebaseFirestore db;
@@ -35,8 +32,8 @@ public class checkinternalmarks extends Fragment {
         FirebaseUser user = mAuth.getCurrentUser();
         String email= user.getEmail();
         ListView listView = (ListView) getView().findViewById(R.id.listview);
-        studentInternalDesign = new ArrayList<studentInternalDesign>();
-        studentInternalAdapter= new studentInternalAdapter(getActivity(), studentInternalDesign);
+        StudentInternal = new ArrayList<studentInternalDesign>();
+        studentAdapter = new studentInternalAdapter(getActivity(), StudentInternal);
         db = FirebaseFirestore.getInstance();
             db.collection("Person")
                     .document("STUDENT " + email).collection("Subjects").get()
@@ -47,14 +44,14 @@ public class checkinternalmarks extends Fragment {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     if (document.exists()) {
                                         Log.i("document",document.getId()+" -> "+document.getData());
-                                        studentInternalDesign.add(new studentInternalDesign(document.getData().get("subjectCode").toString(),document.getData().get("internalMarks1").toString(),document.getData().get("test2").toString(),document.getData().get("total").toString()));
-                                        studentInternalAdapter.notifyDataSetChanged();
+                                        StudentInternal.add(new studentInternalDesign(document.getData().get("subjectCode").toString(),document.getData().get("internalMarks1").toString(),document.getData().get("test2").toString(),document.getData().get("total").toString()));
+                                        studentAdapter.notifyDataSetChanged();
                                     }
                                 }
                             }
                         }
                     });
-        listView.setAdapter(studentInternalAdapter);
+        listView.setAdapter(studentAdapter);
 
 
     }

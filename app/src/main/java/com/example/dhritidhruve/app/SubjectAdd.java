@@ -48,6 +48,7 @@ public class SubjectAdd extends Fragment implements ExampleDialog.ExampleDialogL
         subjectsStudent.put("classAttended",10);
         subjectsStudent.put("email",user.getEmail());
         subjectsStudent.put("internalMarks1",0);
+        subjectsStudent.put("internalMarks2",0);
         subjectsStudent.put("subjectName",subjectName);
         subjectsStudent.put("subjectCode",subjectCode);
         subjectsStudent.put("totalClass",5);

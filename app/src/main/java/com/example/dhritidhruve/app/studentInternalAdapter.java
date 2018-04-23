@@ -27,6 +27,7 @@ public class studentInternalAdapter extends ArrayAdapter<studentInternalDesign> 
     TextView test1View,test2View,totalTextView,subjectCode;
     studentInternalDesign internalMarks;
 
+    @SuppressLint("ViewHolder")
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
