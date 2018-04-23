@@ -93,6 +93,7 @@ public class SubjectAdd extends Fragment implements ExampleDialog.ExampleDialogL
         user = FirebaseAuth.getInstance().getCurrentUser();
         iterate = FirebaseFirestore.getInstance();
 
+        
         addSubject = (Button)view.findViewById(R.id.addSubject);
         subjects = new ArrayList<SubjectDesign>();
         subjectAdapter = new SubjectAdapter(getActivity(), subjects);
