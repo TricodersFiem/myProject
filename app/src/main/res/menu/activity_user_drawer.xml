@@ -6,34 +6,34 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_myprofile"
-            android:icon="@android:color/holo_red_dark"
+            android:icon="@color/ic_launcher_background"
             android:title="My Profile" />
 
         <item
             android:id="@+id/nav_timetable"
-            android:icon="@android:color/holo_red_dark"
+            android:icon="@color/ic_launcher_background"
             android:title="Timetable" />
 
         <item
             android:id="@+id/nav_subject"
-            android:icon="@color/colorAccent"
+            android:icon="@color/ic_launcher_background"
             android:title="Add Subject" />
 
         <item
             android:id="@+id/nav_attendance"
-            android:icon="@android:color/holo_red_dark"
+            android:icon="@color/ic_launcher_background"
             android:title="Attendance" />
         <item
             android:id="@+id/nav_internalmarks"
-            android:icon="@android:color/holo_red_dark"
+            android:icon="@color/ic_launcher_background"
             android:title="Internal marks" />
         <item
             android:id="@+id/nav_notice"
-            android:icon="@android:color/holo_red_dark"
+            android:icon="@color/ic_launcher_background"
             android:title="Events" />
         <item
             android:id="@+id/nav_signout"
-            android:icon="@android:color/holo_red_dark"
+            android:icon="@color/ic_launcher_background"
             android:title="Signout" />
 
     </group>

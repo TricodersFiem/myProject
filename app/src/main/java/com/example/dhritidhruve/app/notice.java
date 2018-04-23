@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ public class notice extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.notice, container, false);
-
+        getActivity().setTitle("EVENTS");
         assert container != null;
         View contenedor = (View)container.getParent();
         appBar = (AppBarLayout)contenedor.findViewById(R.id.appbar);
@@ -45,22 +46,23 @@ public class notice extends Fragment {
                 super(fragmentManager);
             }
 
-            String[] tabnames = {"Xplorica", "Culrav", "Sportivo", "Academic" };
+            String[] tabnames = {"Xplorica", "Culrav", "Sportivo","Estrella", "Academic" };
 
             @Override
             public Fragment getItem(int position) {
                 switch (position) {
-                    case 0:return new noticetypes();
-                    case 1:return new noticetypes();
-                    case 2:return new noticetypes();
-                    case 3:return new noticetypes();
+                    case 0:return new Xplorica();
+                    case 1:return new Culrav();
+                    case 2:return new Sportivo();
+                    case 3:return new Estrella();
+                    case 4:return new Academic();
                 }
                 return null;
             }
 
             @Override
             public int getCount() {
-                return 4;
+                return 5;
             }
 
             @Override

@@ -59,7 +59,7 @@
         <Spinner
             android:id="@+id/usertype"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:tag="TYPE" />
 
         <Spinner
@@ -86,7 +86,7 @@
         <Spinner
             android:id="@+id/department"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="41dp"
             android:visibility="visible" />
 
         <LinearLayout
@@ -98,7 +98,7 @@
             <ImageView
                 android:id="@+id/image"
                 android:layout_width="30dp"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:visibility="visible"
                 app:srcCompat="@color/common_google_signin_btn_text_dark_disabled" />
@@ -130,6 +130,12 @@
                 android:onClick="signup"
                 android:text="SIGN UP" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/goback"
+            android:layout_width="166dp"
+            android:layout_height="wrap_content"
+            android:text="GO BACK" />
 
 
     </LinearLayout>

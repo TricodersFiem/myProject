@@ -37,16 +37,18 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.IOException;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 
 public class user extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     FirebaseFirestore db;
-    TextView qualification, designation, name, collegeid, department, year, useremail,username;
+    TextView qualification, designation, name, collegeid, department, year;
     ImageView userpic;
     Student student;
     String email;
     Staff staff;
-    //Create an instance of storage reference
     StorageReference imageref;
     FirebaseUser user;
     @SuppressLint("SetTextI18n")
@@ -69,8 +71,6 @@ public class user extends AppCompatActivity
         year = (TextView) findViewById(R.id.year);
         collegeid = (TextView) findViewById(R.id.collegeId);
         userpic = (ImageView) findViewById(R.id.userpic);
-      //  useremail=(TextView)findViewById(R.id.useridnav);
-       // username=(TextView)findViewById(R.id.usernamenav);
 
         db = FirebaseFirestore.getInstance();
         db.collection("Person")
@@ -117,27 +117,24 @@ public class user extends AppCompatActivity
     public void changeTextStudent() {
         designation.setVisibility(View.GONE);
         qualification.setVisibility(View.GONE);
+        year.setVisibility(View.VISIBLE);
         name.setText("Name: " + student.getName());
-        //useremail.setText(" "+student.getEmail());
-        //username.setText(" "+student.getName());
         department.setText("Department: " + student.getDepartment());
         year.setText("Year: " + student.getYear());
         collegeid.setText("College Id: " + student.getCollegeId());
-
         changeImageByUrl();
 
     }
     public void changeTextStaff() {
+        year.setVisibility(View.GONE);
+        designation.setVisibility(View.VISIBLE);
+        qualification.setVisibility(View.VISIBLE);
         name.setText("Name: " + staff.getName());
         department.setText("Department: " + staff.getDepartment());
         designation.setText("Designation: "+ staff.getDesignation());
         collegeid.setText("College Id: " + staff.getCollegeId());
         qualification.setText("Qualification: "+ staff.getQualification());
-        year.setVisibility(View.GONE);
-        //useremail.setText(" "+staff.getEmail());
-        //username.setText(" "+staff.getName());
         changeImageByUrl();
-
     }
     public void changeImageByUrl(){
         imageref.child(email+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -146,10 +143,9 @@ public class user extends AppCompatActivity
                 Glide.with(getApplicationContext())
                         .load(uri)
                         .into(userpic);
-
             }
         });
-        }
+    }
 
 
 
@@ -166,7 +162,7 @@ public class user extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.user, menu);
         return true;
     }
@@ -178,14 +174,6 @@ public class user extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-
-            Intent intent= new Intent(getApplicationContext(),user.getClass());
-            startActivity(intent);
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -195,7 +183,7 @@ public class user extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        ((ConstraintLayout)findViewById(R.id.remove)).removeAllViews();
+        ((ConstraintLayout)findViewById(R.id.ll)).removeAllViews();
         if (id == R.id.nav_timetable) {
             fragmentManager.beginTransaction()
                     .replace(R.id.contenedor,new timetable())
@@ -207,6 +195,7 @@ public class user extends AppCompatActivity
                     .commit();
 
         } else if (id == R.id.nav_internalmarks) {
+
 
             fragmentManager.beginTransaction()
                     .replace(R.id.contenedor,new internalyear())

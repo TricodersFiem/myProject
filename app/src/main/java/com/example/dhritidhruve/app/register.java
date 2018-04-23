@@ -342,6 +342,15 @@ public class register extends AppCompatActivity {
                 startActivityForResult(i,RESULT_LOAD_IMAGE);
             }
         });
+        Button goback =(Button) findViewById(R.id.goback);
+        goback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         }
     }
 

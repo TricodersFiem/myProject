@@ -6,7 +6,7 @@
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="myFiem"
+        android:label="MyFiem"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -21,21 +21,20 @@
         </activity>
         <activity android:name=".MainActivity"
             android:theme="@style/AppTheme"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:label="SIGN IN"/>
         <activity android:name=".register"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:label="CREATE AN ACCOUNT TO SIGN UP"/>
         <activity
             android:name=".user"
-            android:label="@string/title_activity_user"
+            android:label="MY ACCOUNT"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".checkattendance"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".checkinternalmarks"
-            android:screenOrientation="portrait"/>
-
+        <activity android:name=".verifyEmail"
+            android:screenOrientation="portrait"
+            android:label="VERIFY EMAIL ID"/>
 
 
     </application>

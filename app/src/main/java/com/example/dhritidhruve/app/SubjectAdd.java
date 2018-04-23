@@ -26,15 +26,14 @@ public class SubjectAdd extends Fragment implements ExampleDialog.ExampleDialogL
         subjectAdapter.notifyDataSetChanged();
 
     }
-    
 
-    private Button addSubject;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_subject_add, container, false);
-        addSubject = (Button)view.findViewById(R.id.addSubject);
+        Button addSubject = (Button) view.findViewById(R.id.addSubject);
         subjects = new ArrayList<SubjectDesign>();
         subjectAdapter = new SubjectAdapter(getActivity(), subjects);
         ListView listView = (ListView) view.findViewById(R.id.subjectAddList);
