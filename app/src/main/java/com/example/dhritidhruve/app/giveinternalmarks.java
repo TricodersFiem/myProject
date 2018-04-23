@@ -36,6 +36,7 @@ public class giveinternalmarks extends Fragment {
         getActivity().setTitle("Submit Internal Marks");
         db = FirebaseFirestore.getInstance();
 
+        
         Bundle args = getArguments();
         if(args!=null) {
             department = args.getString("department");
