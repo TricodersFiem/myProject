@@ -51,7 +51,8 @@ public class user extends AppCompatActivity
     Staff staff;
     StorageReference imageref;
     FirebaseUser user;
-    @SuppressLint("SetTextI18n")
+    String type="student";
+    NavigationView  navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,22 +88,21 @@ public class user extends AppCompatActivity
                                     if (temp.equals("STUDENT")) {
                                         Log.d("MyTag", "passed");
                                         student = document.toObject(Student.class);
+                                        type = "student";
                                         //Log.d("msg",student.getPhotoId());
                                         changeTextStudent();
                                     } else {
                                         staff = document.toObject(Staff.class);
+                                        type = "staff";
                                         changeTextStaff();
                                     }
                                 }
                             }
-
-
                         } else {
                             Log.d("Tag", "failed");
                         }
                     }
                 });
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -110,8 +110,20 @@ public class user extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+   public void hideItem(){
+        if(type.equals("student")) {
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.activity_user_drawer1);
+        }
+        else{
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.activity_user_drawer);
+        }
+       navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     public void changeTextStudent() {
@@ -122,22 +134,26 @@ public class user extends AppCompatActivity
         department.setText("Department: " + student.getDepartment());
         year.setText("Year: " + student.getYear());
         collegeid.setText("College Id: " + student.getCollegeId());
+        hideItem();
         changeImageByUrl();
 
     }
+
     public void changeTextStaff() {
         year.setVisibility(View.GONE);
         designation.setVisibility(View.VISIBLE);
         qualification.setVisibility(View.VISIBLE);
         name.setText("Name: " + staff.getName());
         department.setText("Department: " + staff.getDepartment());
-        designation.setText("Designation: "+ staff.getDesignation());
+        designation.setText("Designation: " + staff.getDesignation());
         collegeid.setText("College Id: " + staff.getCollegeId());
-        qualification.setText("Qualification: "+ staff.getQualification());
+        qualification.setText("Qualification: " + staff.getQualification());
+        hideItem();
         changeImageByUrl();
     }
-    public void changeImageByUrl(){
-        imageref.child(email+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+
+    public void changeImageByUrl() {
+        imageref.child(email + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Glide.with(getApplicationContext())
@@ -145,9 +161,8 @@ public class user extends AppCompatActivity
                         .into(userpic);
             }
         });
+
     }
-
-
 
 
     @Override
@@ -159,13 +174,12 @@ public class user extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.user, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -177,29 +191,41 @@ public class user extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
         ((ConstraintLayout)findViewById(R.id.ll)).removeAllViews();
+
         if (id == R.id.nav_timetable) {
             fragmentManager.beginTransaction()
                     .replace(R.id.contenedor,new timetable())
                     .commit();
             // Handle the camera action
         } else if (id == R.id.nav_attendance) {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.contenedor,new attendanceyear())
-                    .commit();
+            if(type.equals("staff")) {
+                fragmentManager.beginTransaction()
+                        .replace(R.id.contenedor, new attendanceyear())
+                        .commit();
+            }
+            else{
+                fragmentManager.beginTransaction()
+                        .replace(R.id.contenedor, new checkattendance())
+                        .commit();
+            }
 
         } else if (id == R.id.nav_internalmarks) {
-
-
-            fragmentManager.beginTransaction()
-                    .replace(R.id.contenedor,new internalyear())
-                    .commit();
+            if(type.equals("staff")) {
+                fragmentManager.beginTransaction()
+                        .replace(R.id.contenedor, new internalyear())
+                        .commit();
+            }
+            else{
+                fragmentManager.beginTransaction()
+                        .replace(R.id.contenedor, new checkinternalmarks())
+                        .commit();
+            }
 
         } else if (id == R.id.nav_notice) {
             fragmentManager.beginTransaction()
