@@ -38,7 +38,7 @@ public class SubjectAdd extends Fragment implements ExampleDialog.ExampleDialogL
         subjectAdapter = new SubjectAdapter(getActivity(), subjects);
         ListView listView = (ListView) view.findViewById(R.id.subjectAddList);
         listView.setAdapter(subjectAdapter);
-
+        getActivity().setTitle("ADD SUBJECT");
         addSubject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

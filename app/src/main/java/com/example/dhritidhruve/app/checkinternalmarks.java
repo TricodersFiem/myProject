@@ -1,6 +1,6 @@
 package com.example.dhritidhruve.app;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,15 +25,12 @@ import java.util.ArrayList;
 public class checkinternalmarks extends Fragment {
 
     View view;
-    FirebaseFirestore db;;
-    FirebaseAuth mAuth=FirebaseAuth.getInstance();
-    FirebaseUser user = mAuth.getCurrentUser();
-    String email= user.getEmail();
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.activity_checkinternalmarks, container, false);
-        getActivity().setTitle("CHECK INTERNAL MARKS");
+    public void onActivityCreated(Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
+        FirebaseFirestore db;;
+        FirebaseAuth mAuth=FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String email= user.getEmail();
         db = FirebaseFirestore.getInstance();
         int i;
           /*  db.collection("Person")
@@ -49,6 +46,12 @@ public class checkinternalmarks extends Fragment {
                         }
                     });
         */
+
+    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.activity_checkinternalmarks, container, false);
+        getActivity().setTitle("CHECK INTERNAL MARKS ");
         return view;
     }
 }

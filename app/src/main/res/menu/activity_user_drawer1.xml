@@ -17,12 +17,6 @@
             android:visible="true"/>
 
         <item
-            android:id="@+id/nav_subject"
-            android:icon="@color/ic_launcher_background"
-            android:title="Add Subject"
-            android:visible="true"/>
-
-        <item
             android:id="@+id/nav_attendance"
             android:icon="@color/ic_launcher_background"
             android:title="Attendance"
