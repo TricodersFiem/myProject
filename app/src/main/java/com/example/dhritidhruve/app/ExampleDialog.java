@@ -28,8 +28,8 @@ public class ExampleDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.layout_dialog,null);
-        subjectCode = (EditText)view.findViewById(R.id.subjName);
-        subjectName= (EditText)view.findViewById(R.id.subjCode);
+        subjectCode = (EditText)view.findViewById(R.id.subjCode);
+        subjectName= (EditText)view.findViewById(R.id.subjName);
         department = (Spinner) view.findViewById(R.id.department);
         year = (Spinner) view.findViewById(R.id.year);
 
