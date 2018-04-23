@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,27 +26,37 @@ import java.util.ArrayList;
 public class checkinternalmarks extends Fragment {
 
     View view;
+    ArrayList<studentInternalDesign> studentInternalDesign;
+    studentInternalAdapter studentInternalAdapter;
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        FirebaseFirestore db;;
+        FirebaseFirestore db;
         FirebaseAuth mAuth=FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         String email= user.getEmail();
+        ListView listView = (ListView) getView().findViewById(R.id.listview);
+        studentInternalDesign = new ArrayList<studentInternalDesign>();
+        studentInternalAdapter= new SubjectAdapter(getActivity(), studentInternalDesign);
         db = FirebaseFirestore.getInstance();
         int i;
-          /*  db.collection("Person")
-                    .document("STUDENT " + email).collection("Subjects").whereEqualTo("fgf",efe);
+            db.collection("Person")
+                    .document("STUDENT " + email).collection("Subjects").get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
+                                    if (document.exists() && !document.getId().equals("CS201")) {
+                                        Log.i("document",document.getId()+" -> "+document.getData());
 
+
+                                    }
                                 }
                             }
                         }
                     });
-        */
+        listView.setAdapter(studentInternalAdapter);
+
 
     }
     @Override
