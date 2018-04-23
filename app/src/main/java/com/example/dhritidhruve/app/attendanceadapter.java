@@ -64,6 +64,7 @@ public class attendanceadapter extends ArrayAdapter<attendancedesign> {
             @Override
             public void onClick(View view) {
                 if (((CheckBox)view).isChecked()) {
+
                     holder.attendance.setAttendance(true);
                     holder.check.setText("Present");
                 } else {

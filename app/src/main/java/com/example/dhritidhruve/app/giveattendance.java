@@ -68,7 +68,8 @@ public class giveattendance extends Fragment{
                                     String temp = docs.split(" ")[0];
                                     if (temp.equals("STUDENT")) {
                                         Student student = document.toObject(Student.class);
-                                        attendance.add(new attendancedesign(student.getName(), student.getCollegeId().substring(student.getCollegeId().length()-3)));
+                                        int roll = Integer.parseInt(student.getCollegeId().substring(student.getCollegeId().length()-3));
+                                        attendance.add(new attendancedesign(student.getName(), Integer.toString(roll)));
                                         Attendanceadapter.notifyDataSetChanged();
 
                                     }
