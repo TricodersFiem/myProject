@@ -81,7 +81,7 @@ public class SubjectAdd extends Fragment implements ExampleDialog.ExampleDialogL
         subjectAdapter.notifyDataSetChanged();
 
     }
-
+    
 
     private Button addSubject;
     @Override

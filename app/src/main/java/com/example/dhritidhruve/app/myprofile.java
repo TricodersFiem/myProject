@@ -30,20 +30,22 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 public class myprofile extends Fragment{
     FirebaseFirestore db;
-    TextView qualification, designation, name, collegeid, department, year, useremail,username;
+    TextView qualification, designation, name, collegeid, department, year;
     ImageView userpic;
     Student student;
     String email;
     Staff staff;
-    //Create an instance of storage reference
     StorageReference imageref;
     FirebaseUser user;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_user, container, false);
-
+        getActivity().setTitle("MY PROFILE");
         assert container != null;
         imageref = FirebaseStorage.getInstance().getReference();
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -56,8 +58,6 @@ public class myprofile extends Fragment{
         year = (TextView) view.findViewById(R.id.year);
         collegeid = (TextView) view.findViewById(R.id.collegeId);
         userpic = (ImageView) view.findViewById(R.id.userpic);
-        useremail=(TextView)view.findViewById(R.id.usernamenav);
-        username=(TextView)view.findViewById(R.id.usernamenav);
 
         db = FirebaseFirestore.getInstance();
         db.collection("Person")
@@ -69,7 +69,9 @@ public class myprofile extends Fragment{
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (document.exists()) {
-                                    if (document.getId().equals("STUDENT")) {
+                                    String docs = document.getId();
+                                    String temp = docs.split(" ")[0];
+                                    if (temp.equals("STUDENT")) {
                                         Log.d("MyTag", "passed");
                                         student = document.toObject(Student.class);
                                         //Log.d("msg",student.getPhotoId());
@@ -80,37 +82,33 @@ public class myprofile extends Fragment{
                                     }
                                 }
                             }
-
-
                         } else {
                             Log.d("Tag", "failed");
                         }
                     }
                 });
-
-
         return view;
     }
     public void changeTextStudent() {
         designation.setVisibility(View.GONE);
         qualification.setVisibility(View.GONE);
+        year.setVisibility(View.VISIBLE);
         name.setText("Name: " + student.getName());
-        useremail.setText(student.getEmail());
-        username.setText(student.getName());
         department.setText("Department: " + student.getDepartment());
         year.setText("Year: " + student.getYear());
         collegeid.setText("College Id: " + student.getCollegeId());
-
         changeImageByUrl();
 
     }
     public void changeTextStaff() {
+        year.setVisibility(View.GONE);
+        designation.setVisibility(View.VISIBLE);
+        qualification.setVisibility(View.VISIBLE);
         name.setText("Name: " + staff.getName());
         department.setText("Department: " + staff.getDepartment());
         designation.setText("Designation: "+ staff.getDesignation());
         collegeid.setText("College Id: " + staff.getCollegeId());
         qualification.setText("Qualification: "+ staff.getQualification());
-        year.setVisibility(View.GONE);
         changeImageByUrl();
 
     }

@@ -13,64 +13,46 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
+import java.util.ArrayList;
 
 
 public class attendanceyear extends Fragment{
-    private AppBarLayout appBar;
-    private TabLayout tabs;
+
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
+        ListView listView = (ListView) getView().findViewById(R.id.list1);
+        final ArrayList<String> arrayList = new ArrayList<String>();
+        arrayList.add("CSE1 1ST M401 Mathematics");
+        arrayList.add("CSE2 4TH M401 Mathematics");
+        arrayList.add("CSE1 3RD M401 Mathematics");
+        arrayList.add("CSE2 2ND M401 Mathematics");
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, arrayList);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i >= 0) {
+                    getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.contenedor, new giveinternalmarks())
+                            .commit();
+                }
+            }
+        });
+
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.attendanceyear, container, false);
-
-
-        assert container != null;
-        View contenedor = (View)container.getParent();
-        appBar = (AppBarLayout)contenedor.findViewById(R.id.appbar);
-        tabs = new TabLayout(getActivity());
-        tabs.setTabTextColors(Color.parseColor("#FFFFFF"), Color.parseColor("#FFFFFF"));
-        appBar.addView(tabs);
-
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
-        attendanceyear.ViewPagerAdapter pagerAdapter = new attendanceyear.ViewPagerAdapter(getFragmentManager());
-        viewPager.setAdapter(pagerAdapter);
-        tabs.setupWithViewPager(viewPager);
+        getActivity().setTitle("GIVE ATTENDANCE TO");
         return view;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        appBar.removeView(tabs);
-    }
-    public class ViewPagerAdapter extends FragmentStatePagerAdapter {
-        ViewPagerAdapter(FragmentManager fragmentManager) {
-            super(fragmentManager);
-        }
-
-        String[] tabnames = {"1st","2nd","3rd","4th"};
-
-        @Override
-        public android.support.v4.app.Fragment getItem(int position) {
-            switch (position) {
-                case 0:return new yearattendance();
-                case 1:return new yearattendance();
-                case 2: return new yearattendance();
-                case 3: return new yearattendance();
-            }
-            return null;
-        }
-
-        @Override
-        public int getCount() {
-            return 4;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return tabnames[position];
-        }
-    }
 }
 
 

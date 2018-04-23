@@ -20,6 +20,11 @@
         android:title="Xplorica"
     />
     <item
+        android:id="@+id/estrella"
+        android:icon="@android:color/darker_gray"
+        android:title="Estrella"
+        />
+    <item
         android:id="@+id/academic"
         android:icon="@android:color/holo_orange_light"
         android:title="Academic"

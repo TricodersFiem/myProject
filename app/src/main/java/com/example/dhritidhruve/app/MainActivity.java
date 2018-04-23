@@ -43,27 +43,25 @@ public class MainActivity extends AppCompatActivity {
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-
                             progressDialog.dismiss();
                             if (task.isSuccessful()) {
-                                Toast.makeText(MainActivity.this, "Login Successful ", Toast.LENGTH_SHORT).show();
-                                FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                                final FirebaseUser user = mAuth.getCurrentUser();
-                                if(!user.isEmailVerified()) {
-
-                                    Toast.makeText(MainActivity.this, "PROCEED TO VERIFY YOUR ACCOUNT " + user.getEmail(), Toast.LENGTH_LONG).show();
+                                Log.d("TAG", "signInWithEmail:success");
+                                mAuth= FirebaseAuth.getInstance();
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                if(!user.isEmailVerified()){
+                                    Toast.makeText(MainActivity.this, "PROCEED TO VERIFY YOUR ACCOUNT ", Toast.LENGTH_LONG).show();
                                     Intent i = new Intent(getApplicationContext(), verifyEmail.class);
                                     startActivity(i);
                                     finish();
                                 }
-                                else
-                                {
-                                    Toast.makeText(MainActivity.this, "SUCCESSFUL SIGN..CONGRATULATIONS " + user.getEmail(), Toast.LENGTH_LONG).show();
-                                    Intent intent=new Intent(getApplicationContext(),user.class);
-                                    startActivity(intent);
+                                else{
+                                    Toast.makeText(MainActivity.this, "SUCCESSFUL SIGN IN AND EMAIL VERIFICATION..CONGRATULATIONS ", Toast.LENGTH_LONG).show();
+                                    Intent i = new Intent(getApplicationContext(), user.class);
+                                    startActivity(i);
                                     finish();
                                 }
-                            } else {
+                            }
+                            else {
                                 Toast.makeText(getApplicationContext(), task.getException().getMessage(),
                                         Toast.LENGTH_SHORT).show();
                             }
@@ -74,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Sign In");
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
         txtEmail = (EditText) findViewById(R.id.email);

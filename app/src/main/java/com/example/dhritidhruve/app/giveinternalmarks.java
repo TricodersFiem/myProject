@@ -20,7 +20,7 @@ public class giveinternalmarks extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.giveinternalmarks, container, false);
-
+        getActivity().setTitle("SUBMIT INTERNAL MARKS");
         ArrayList<InternalMarksDesign> internalMarks = new ArrayList<InternalMarksDesign>();
         internalMarks.add(new InternalMarksDesign("Abhisekh", "2"));
         internalMarks.add(new InternalMarksDesign("Riya", "4"));
