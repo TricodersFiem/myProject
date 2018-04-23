@@ -138,7 +138,7 @@ public class timetable extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view= inflater.inflate(R.layout.timetable,container,false);
-        getActivity().setTitle("TIMETATBLE");
+        getActivity().setTitle("Timetable");
         return view;
     }
 }

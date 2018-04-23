@@ -45,7 +45,7 @@ public class myprofile extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_user, container, false);
-        getActivity().setTitle("MY PROFILE");
+        getActivity().setTitle("My Profile");
         assert container != null;
         imageref = FirebaseStorage.getInstance().getReference();
         user = FirebaseAuth.getInstance().getCurrentUser();

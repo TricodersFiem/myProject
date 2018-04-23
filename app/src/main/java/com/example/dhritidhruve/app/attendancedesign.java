@@ -13,6 +13,8 @@ public class attendancedesign {
         roll = Roll;
     }
 
+
+
     public String getName(){ return name;}
 
     public String getRoll(){ return roll;}
