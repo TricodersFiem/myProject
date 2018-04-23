@@ -46,7 +46,7 @@ public class notice extends Fragment {
                 super(fragmentManager);
             }
 
-            String[] tabnames = {"Xplorica", "Culrav", "Sportivo","Estrella", "Academic" };
+            String[] tabnames = {"xplorica", "culrav", "sportivo","Estrella", "academic" };
 
             @Override
             public Fragment getItem(int position) {

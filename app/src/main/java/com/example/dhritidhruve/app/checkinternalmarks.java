@@ -36,9 +36,8 @@ public class checkinternalmarks extends Fragment {
         String email= user.getEmail();
         ListView listView = (ListView) getView().findViewById(R.id.listview);
         studentInternalDesign = new ArrayList<studentInternalDesign>();
-        studentInternalAdapter= new SubjectAdapter(getActivity(), studentInternalDesign);
+        studentInternalAdapter= new studentInternalAdapter(getActivity(), studentInternalDesign);
         db = FirebaseFirestore.getInstance();
-        int i;
             db.collection("Person")
                     .document("STUDENT " + email).collection("Subjects").get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -46,10 +45,10 @@ public class checkinternalmarks extends Fragment {
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                    if (document.exists() && !document.getId().equals("CS201")) {
+                                    if (document.exists()) {
                                         Log.i("document",document.getId()+" -> "+document.getData());
-
-
+                                        studentInternalDesign.add(new studentInternalDesign(document.getData().get("subjectCode").toString(),document.getData().get("internalMarks1").toString(),document.getData().get("test2").toString(),document.getData().get("total").toString()));
+                                        studentInternalAdapter.notifyDataSetChanged();
                                     }
                                 }
                             }

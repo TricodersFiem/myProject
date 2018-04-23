@@ -1,6 +1,5 @@
 package com.example.dhritidhruve.app;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,21 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
 public class Xplorica extends Fragment {
 
-    StorageReference imageref;
+    //StorageReference imageref;
         View view;
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         final ImageView event =(ImageView)view.findViewById(R.id.event);
-        imageref = FirebaseStorage.getInstance().getReference();
-        imageref.child("Xplorica.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+      /*  imageref = FirebaseStorage.getInstance().getReference();
+        imageref.child("xplorica.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Glide.with(getActivity())
@@ -31,7 +25,8 @@ public class Xplorica extends Fragment {
                         .into(event);
 
             }
-        });
+        });*/
+      event.setImageResource(R.drawable.xplorica);
     }
         @Nullable
         @Override

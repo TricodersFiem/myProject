@@ -19,49 +19,34 @@ public class studentInternalAdapter extends ArrayAdapter<studentInternalDesign> 
     private Context context;
     private ArrayList<studentInternalDesign> item;
 
-
     studentInternalAdapter(Context context, ArrayList<studentInternalDesign> item){
-
         super(context, 0, item);
         this.context = context;
         this.item = item;
-
     }
+    TextView test1View,test2View,totalTextView,subjectCode;
+    studentInternalDesign internalMarks;
 
-    public static class ViewHolder{
-        TextView test1View,test2View,totalTextView,subjectCode;
-        studentInternalDesign internalMarks;
-    }
-
-    @SuppressLint("ViewHolder")
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         //Check if the existing view is being reused, otherwise inflate the view
         View listItemView = convertView;
-        ViewHolder holder = new ViewHolder();
         LayoutInflater inflator = ((Activity)context).getLayoutInflater();
-        listItemView = inflator.inflate(R.layout.linear_layout_Student_internal_marks, parent,false);
+        listItemView = inflator.inflate(R.layout.linear_layout_studentinternalmarks, parent,false);
 
-        holder.internalMarks = item.get(position);
-        holder.totalTextView = (TextView) listItemView.findViewById(R.id.total);
-        holder.test1View = (TextView) listItemView.findViewById(R.id.test1);
-        holder.test2View = (TextView) listItemView.findViewById(R.id.test2);
-        holder.subjectCode = (TextView)listItemView.findViewById(R.id.subjCode);
+        internalMarks = item.get(position);
+        totalTextView = (TextView) listItemView.findViewById(R.id.total);
+        test1View = (TextView) listItemView.findViewById(R.id.test1);
+        test2View = (TextView) listItemView.findViewById(R.id.test2);
+        subjectCode = (TextView)listItemView.findViewById(R.id.subjCode);
 
-        listItemView.setTag(holder);
-
-        setupItem(holder);
+        totalTextView.setText(internalMarks.getTotal());
+        subjectCode.setText(internalMarks.getSubjectCode());
+        test1View.setText(internalMarks.getTest1());
+        test2View.setText(internalMarks.getTest2());
 
         return listItemView;
-
-    }
-
-    private void setupItem(ViewHolder holder){
-        holder.test1View.setText(String.valueOf(holder.internalMarks.getTest1()));
-        holder.test2View.setText(String.valueOf(holder.internalMarks.getTest2()));
-        holder.totalTextView.setText(String.valueOf(holder.internalMarks.getTotal()));
-        holder.subjectCode.setText(holder.internalMarks.getSubjectCode());
 
     }
 }

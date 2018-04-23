@@ -1,10 +1,9 @@
 package com.example.dhritidhruve.app;
 
 public class studentInternalDesign {
-    private String subjectCode;
-    private int test1, test2, total;
+    private String subjectCode,test1, test2, total;
 
-    public studentInternalDesign(String SubjectCode, int Test1, int Test2, int Total)
+    public studentInternalDesign(String SubjectCode, String Test1, String Test2, String Total)
     {
         subjectCode=SubjectCode;
         test1 = Test1;
@@ -14,9 +13,9 @@ public class studentInternalDesign {
 
     public String getSubjectCode(){ return subjectCode;}
 
-    public int getTest1(){ return test1;}
+    public String getTest1(){ return test1;}
 
-    public int getTotal(){ return total;}
+    public String getTotal(){ return total;}
 
-    public int getTest2(){ return test2;}
+    public String getTest2(){ return test2;}
 }
