@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -65,8 +66,26 @@ public class internalyear extends Fragment{
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i >= 0) {
-                    getFragmentManager().beginTransaction()
-                            .replace(R.id.contenedor,new giveinternalmarks())
+                    giveinternalmarks secondFrag = new giveinternalmarks();
+                    String d, y,s, sc;
+                    TextView dep =(TextView) view.findViewById(R.id.department);
+                    TextView yy =(TextView) view.findViewById(R.id.year);
+                    TextView ss =(TextView) view.findViewById(R.id.subjName);
+                    TextView cc = (TextView) view.findViewById(R.id.subjCode);
+                    d = dep.getText().toString();
+                    y = yy.getText().toString();
+                    s = ss.getText().toString();
+                    sc = cc.getText().toString();
+                    Bundle args = new Bundle();
+                    args.putString("department",d);
+                    args.putString("year",y);
+                    args.putString("subjName",s);
+                    args.putString("subjCode",sc);
+                    secondFrag.setArguments(args);
+
+                    getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.contenedor, secondFrag)
                             .commit();
                 }
             }
