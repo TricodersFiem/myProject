@@ -68,7 +68,7 @@ public class giveinternalmarks extends Fragment {
                                     if (temp.equals("STUDENT")) {
                                         Student student = document.toObject(Student.class);
                                         int roll = Integer.parseInt(student.getCollegeId().substring(student.getCollegeId().length()-3));
-                                        internalMarks.add(new InternalMarksDesign(student.getName(), Integer.toString(roll)));
+                                        internalMarks.add(new InternalMarksDesign(student.getName(), Integer.toString(roll), subjectCode));
                                         marksAdapter.notifyDataSetChanged();
 
                                     }

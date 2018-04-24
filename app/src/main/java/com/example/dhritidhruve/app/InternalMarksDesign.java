@@ -1,7 +1,7 @@
 package com.example.dhritidhruve.app;
 
 public class InternalMarksDesign {
-    private String name, roll;
+    private String name, roll, subjectCode;
     private int test1, test2;
 
     public InternalMarksDesign(String Name, String Roll, int Test1, int Test2)
@@ -18,6 +18,13 @@ public class InternalMarksDesign {
         roll = Roll;
         test1 = 0;
         test2 = 0;
+    }
+    public InternalMarksDesign(String Name, String Roll, String SubjectCode){
+        name = Name;
+        roll = Roll;
+        test1 = 0;
+        test2 = 0;
+        subjectCode = SubjectCode;
     }
 
     public String getName(){ return name;}
