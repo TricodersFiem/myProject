@@ -49,13 +49,13 @@ public class SubjectAdd extends Fragment implements ExampleDialog.ExampleDialogL
 
         final Map<String,Object> subjectsStudent = new HashMap<>();
         final Map<String,Object> mySubject = new HashMap<>();
-        subjectsStudent.put("classAttended",10);
+        subjectsStudent.put("classAttended",5);
         subjectsStudent.put("email",user.getEmail());
         subjectsStudent.put("internalMarks1",0);
         subjectsStudent.put("internalMarks2",0);
         subjectsStudent.put("subjectName",subjectName);
         subjectsStudent.put("subjectCode",subjectCode);
-        subjectsStudent.put("totalClass",5);
+        subjectsStudent.put("totalClass",10);
 
         myData.put(subjectCode,subjectsStudent);
         mySubject.put("Subjects",myData);

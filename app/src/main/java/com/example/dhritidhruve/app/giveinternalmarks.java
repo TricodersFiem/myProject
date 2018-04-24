@@ -93,37 +93,6 @@ public class giveinternalmarks extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                /*
-                String beforeName = String.valueOf(marksAdapter.getItem(i).getTest1());
-                String userName = String.valueOf(marksAdapter.getItem(i).getName());
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("Person").whereEqualTo("name",userName)
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        if (document.exists()) {
-                                            String docs = document.getId();
-                                            String temp = docs.split(" ")[0];
-                                            if (temp.equals("STUDENT")) {
-                                                FirebaseFirestore db2 = FirebaseFirestore.getInstance();
-                                                db2.collection("Person").document(document.getId()).update(subjectCode+".internalMarks1",15);
-
-
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        });
-
-
-                String changedName = "15";
-                marksAdapter.getItem(i).setTest1(changedName);
-                marksAdapter.notifyDataSetChanged();
-                */
                 showInputBox(i);
 
             }

@@ -3,7 +3,14 @@ package com.example.dhritidhruve.app;
 import java.text.DecimalFormat;
 
 public class studentAttendanceDesign {
-    private String subjectCode,classesattended, totalclases, percent;
+    private String subjectCode,classesattended, totalclases, percent,name,roll;
+    public studentAttendanceDesign(String name, String roll,String SubjectCode, String ClassesAttended, String TotalClasses){
+        this.name = name;
+        this.roll = roll;
+        classesattended = ClassesAttended;
+        totalclases = TotalClasses;
+        subjectCode=SubjectCode;
+    }
 
     public studentAttendanceDesign(String SubjectCode, String ClassesAttended, String TotalClasses)
     {
@@ -12,9 +19,22 @@ public class studentAttendanceDesign {
         totalclases = TotalClasses;
     }
 
+    public String getName(){return name;}
+
+    public String getRoll(){return roll;}
+
     public String getSubjectCode(){ return subjectCode;}
 
     public String getClassesattended(){ return classesattended;}
+
+    public void setClassesattended(int value){
+        double current = Double.parseDouble(classesattended);
+        if(current>0) {
+            current = current + value;
+            classesattended = String.valueOf(current);
+        }
+
+    }
 
     public String getTotalclasses(){ return totalclases;}
 

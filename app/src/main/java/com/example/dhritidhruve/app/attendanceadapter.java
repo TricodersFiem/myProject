@@ -12,11 +12,11 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-public class attendanceadapter extends ArrayAdapter<attendancedesign> {
+public class attendanceadapter extends ArrayAdapter<studentAttendanceDesign> {
     private Context context;
-    private ArrayList<attendancedesign> item;
+    private ArrayList<studentAttendanceDesign> item;
 
-    attendanceadapter(Context context, ArrayList<attendancedesign> item) {
+    attendanceadapter(Context context, ArrayList<studentAttendanceDesign> item) {
 
         super(context, 0, item);
         this.context = context;
@@ -25,7 +25,7 @@ public class attendanceadapter extends ArrayAdapter<attendancedesign> {
     public static class ViewHolder {
         CheckBox check;
         TextView roll, name,percent;
-        attendancedesign attendance;
+        studentAttendanceDesign attendance;
     }
 
     @SuppressLint("ViewHolder")
@@ -65,11 +65,15 @@ public class attendanceadapter extends ArrayAdapter<attendancedesign> {
             public void onClick(View view) {
                 if (((CheckBox)view).isChecked()) {
 
-                    holder.attendance.setAttendance(true);
+                    //holder.attendance.setAttendance(true);
                     holder.check.setText("Present");
+                    holder.attendance.setClassesattended(1);
+                    holder.percent.setText(String.valueOf(holder.attendance.getPercent()));
                 } else {
-                    holder.attendance.setAttendance(false);
+                    //holder.attendance.setAttendance(false);
                     holder.check.setText("Absent");
+                    holder.attendance.setClassesattended(-1);
+                    holder.percent.setText(String.valueOf(holder.attendance.getPercent()));
                 }
 
             }

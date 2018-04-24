@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class giveattendance extends Fragment{
     FirebaseFirestore db,db2;
-    ArrayList<attendancedesign> attendance;
+    ArrayList<studentAttendanceDesign> attendance;
     attendanceadapter Attendanceadapter;
 
     String department, year, subjectName, subjectCode;
@@ -50,7 +50,7 @@ public class giveattendance extends Fragment{
         }
 
 
-        attendance = new ArrayList<attendancedesign>();
+        attendance = new ArrayList<studentAttendanceDesign>();
         Attendanceadapter = new attendanceadapter(getActivity(), attendance);
         ListView listView = (ListView) view.findViewById(R.id.list_view1);
         listView.setAdapter(Attendanceadapter);
@@ -76,7 +76,8 @@ public class giveattendance extends Fragment{
                                         Map<String, Object> myData = (Map<String,Object>)document.getData().get("Subjects");
                                         Map<String,Object> values =  (Map<String,Object>)myData.get(subjectCode);
                                         Log.i("val1",values.get("email").toString());
-                                        attendance.add(new attendancedesign(document.getData().get("name").toString(), Integer.toString(roll)));
+                                        attendance.add(new studentAttendanceDesign(document.getData().get("name").toString(),Integer.toString(roll),values.get("subjectCode").toString(),values.get("classAttended").toString(),values.get("totalClass").toString()));
+                                        //attendance.add(new studentAttendanceDesign(document.getData().get("name").toString(), Integer.toString(roll)));
                                         Attendanceadapter.notifyDataSetChanged();
 
                                     }
