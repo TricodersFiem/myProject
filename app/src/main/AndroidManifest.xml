@@ -23,9 +23,12 @@
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:label="SIGN IN"/>
+
         <activity android:name=".register"
             android:screenOrientation="portrait"
-            android:label="CREATE AN ACCOUNT TO SIGN UP"/>
+            android:label="CREATE AN ACCOUNT TO SIGN UP"
+            android:theme="@style/AppTheme"/>
+
         <activity
             android:name=".user"
             android:label="MY ACCOUNT"
@@ -34,7 +37,8 @@
 
         <activity android:name=".verifyEmail"
             android:screenOrientation="portrait"
-            android:label="VERIFY EMAIL ID"/>
+            android:label="VERIFY EMAIL ID"
+            android:theme="@style/AppTheme" />
 
 
     </application>
