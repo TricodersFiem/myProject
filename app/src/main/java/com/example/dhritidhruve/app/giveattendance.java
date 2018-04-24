@@ -17,6 +17,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by Dhriti Dhruve on 05-04-2018.
@@ -67,9 +68,15 @@ public class giveattendance extends Fragment{
                                     String docs = document.getId();
                                     String temp = docs.split(" ")[0];
                                     if (temp.equals("STUDENT")) {
-                                        Student student = document.toObject(Student.class);
-                                        int roll = Integer.parseInt(student.getCollegeId().substring(student.getCollegeId().length()-3));
-                                        attendance.add(new attendancedesign(student.getName(), Integer.toString(roll)));
+                                        //Student student = document.toObject(Student.class);
+                                        //name = student.getName();
+                                        String r = document.getData().get("collegeId").toString();
+                                        int roll = Integer.parseInt(r.substring(r.length()-3));
+                                        //Log.i("myDoc","->"+document.getData());
+                                        Map<String, Object> myData = (Map<String,Object>)document.getData().get("Subjects");
+                                        Map<String,Object> values =  (Map<String,Object>)myData.get(subjectCode);
+                                        Log.i("val1",values.get("email").toString());
+                                        attendance.add(new attendancedesign(document.getData().get("name").toString(), Integer.toString(roll)));
                                         Attendanceadapter.notifyDataSetChanged();
 
                                     }
