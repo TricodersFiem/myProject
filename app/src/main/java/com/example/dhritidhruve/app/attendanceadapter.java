@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 public class attendanceadapter extends ArrayAdapter<studentAttendanceDesign> {
@@ -67,12 +70,23 @@ public class attendanceadapter extends ArrayAdapter<studentAttendanceDesign> {
 
                     //holder.attendance.setAttendance(true);
                     holder.check.setText("Present");
+                    FirebaseFirestore db2 = FirebaseFirestore.getInstance();
                     holder.attendance.setClassesattended(1);
+                    Log.i("docid",holder.attendance.getDocId());
+                    Log.i("sc",holder.attendance.getSubjectCode());
+                    Log.i("ca",holder.attendance.getClassesattended());
+                    db2.collection("Person").document(holder.attendance.getDocId()).update("Subjects."+holder.attendance.getSubjectCode()+".classAttended",Integer.parseInt(holder.attendance.getClassesattended()));
+
                     holder.percent.setText(String.valueOf(holder.attendance.getPercent()));
                 } else {
                     //holder.attendance.setAttendance(false);
                     holder.check.setText("Absent");
+                    FirebaseFirestore db2 = FirebaseFirestore.getInstance();
+                    Log.i("docid",holder.attendance.getDocId());
+                    Log.i("sc",holder.attendance.getSubjectCode());
+                    Log.i("ca",holder.attendance.getClassesattended());
                     holder.attendance.setClassesattended(-1);
+                    db2.collection("Person").document(holder.attendance.getDocId()).update("Subjects."+holder.attendance.getSubjectCode()+".classAttended",Integer.parseInt(holder.attendance.getClassesattended()));
                     holder.percent.setText(String.valueOf(holder.attendance.getPercent()));
                 }
 

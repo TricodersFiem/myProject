@@ -24,7 +24,7 @@ import java.util.Map;
  */
 
 public class giveattendance extends Fragment{
-    FirebaseFirestore db,db2;
+    FirebaseFirestore db;
     ArrayList<studentAttendanceDesign> attendance;
     attendanceadapter Attendanceadapter;
 
@@ -48,6 +48,31 @@ public class giveattendance extends Fragment{
             Log.i("subjName",subjectName);
             Log.i("subjCode",subjectCode);
         }
+
+        FirebaseFirestore db2 = FirebaseFirestore.getInstance();
+        db2.collection("Person")
+                .whereEqualTo("department",department)
+                .whereEqualTo("year",year)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                           @Override
+                                           public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                               if (task.isSuccessful()) {
+                                                   for (QueryDocumentSnapshot document : task.getResult()) {
+                                                       if (document.exists()) {
+                                                           String docs = document.getId();
+                                                           String temp = docs.split(" ")[0];
+                                                           if (temp.equals("STUDENT")) {
+                                                               Map<String, Object> myData = (Map<String, Object>) document.getData().get("Subjects");
+                                                               Map<String, Object> values = (Map<String, Object>) myData.get(subjectCode);
+                                                               FirebaseFirestore db2 = FirebaseFirestore.getInstance();
+                                                               db2.collection("Person").document(document.getId()).update("Subjects." + subjectCode + ".totalClass", Integer.parseInt(values.get("totalClass").toString()) + 1);
+                                                           }
+                                                       }
+                                                   }
+                                               }
+                                           }
+                                       });
 
 
         attendance = new ArrayList<studentAttendanceDesign>();
@@ -75,8 +100,10 @@ public class giveattendance extends Fragment{
                                         //Log.i("myDoc","->"+document.getData());
                                         Map<String, Object> myData = (Map<String,Object>)document.getData().get("Subjects");
                                         Map<String,Object> values =  (Map<String,Object>)myData.get(subjectCode);
-                                        Log.i("val1",values.get("email").toString());
-                                        attendance.add(new studentAttendanceDesign(document.getData().get("name").toString(),Integer.toString(roll),values.get("subjectCode").toString(),values.get("classAttended").toString(),values.get("totalClass").toString()));
+                                        //FirebaseFirestore db2 = FirebaseFirestore.getInstance();
+                                        //db2.collection("Person").document(document.getId()).update("Subjects."+subjectCode+".totalClass",Integer.parseInt(values.get("totalClass").toString())+1);
+                                        //Log.i("val1",values.get("email").toString());
+                                        attendance.add(new studentAttendanceDesign(document.getId(),document.getData().get("name").toString(),Integer.toString(roll),values.get("subjectCode").toString(),values.get("classAttended").toString(),values.get("totalClass").toString()));
                                         //attendance.add(new studentAttendanceDesign(document.getData().get("name").toString(), Integer.toString(roll)));
                                         Attendanceadapter.notifyDataSetChanged();
 
