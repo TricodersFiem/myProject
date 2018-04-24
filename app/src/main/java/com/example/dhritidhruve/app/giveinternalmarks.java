@@ -8,10 +8,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -25,9 +27,11 @@ import java.util.ArrayList;
 public class giveinternalmarks extends Fragment {
     FirebaseFirestore db,db2;
     ArrayList<InternalMarksDesign> internalMarks;
-    InternalMarksAdapter marksAdapter;
+    InternalMarksAdapter2 marksAdapter;
 
-    String department, year, subjectName, subjectCode;
+    String department, year, subjectName, subjectCode,name;
+   String[] marks1,marks2;
+
     View view;
     @Nullable
     @Override
@@ -49,7 +53,7 @@ public class giveinternalmarks extends Fragment {
             Log.i("subjCode",subjectCode);
         }
         internalMarks = new ArrayList<InternalMarksDesign>();
-        marksAdapter = new InternalMarksAdapter(getActivity(), internalMarks);
+        marksAdapter = new InternalMarksAdapter2(getActivity(), internalMarks);
         ListView listView = (ListView) view.findViewById(R.id.list_view1);
         listView.setAdapter(marksAdapter);
         //Add the collection Subjects with the subject Code document id to the students
@@ -67,8 +71,31 @@ public class giveinternalmarks extends Fragment {
                                     String temp = docs.split(" ")[0];
                                     if (temp.equals("STUDENT")) {
                                         Student student = document.toObject(Student.class);
+                                        name = student.getName();
+
                                         int roll = Integer.parseInt(student.getCollegeId().substring(student.getCollegeId().length()-3));
-                                        internalMarks.add(new InternalMarksDesign(student.getName(), Integer.toString(roll), subjectCode));
+                                        Log.i("roll",subjectCode);
+                                        FirebaseFirestore db2 = FirebaseFirestore.getInstance();
+                                        db2.collection("Person").document(document.getId()).collection("Subjects").document(subjectCode).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    DocumentSnapshot document = task.getResult();
+                                                    if (document.exists()) {
+                                                        Log.i("TAG", "DocumentSnapshot data: " + document.getData());
+                                                        //marks1 = new String[0];
+                                                        //marks2 = new String[0];
+                                                        //marks1[0] = document.getData().get("internalMarks1").toString();
+                                                        //marks2[0] = document.getData().get("internalMarks2").toString();
+                                                        //Log.i("TAG2", "DocumentSnapshot data: " + marks1[0]+" "+marks2[0]);
+                                                        //internalMarks.add(new InternalMarksDesign(name, Integer.toString(roll), subjectCode, document.getData().get("internalMarks1").toString(), document.getData().get("internalMarks2").toString()));
+                                                        //marksAdapter.notifyDataSetChanged();
+                                                    }
+                                                }
+                                            }
+                                        });
+                                       // Log.i("TAG3", "DocumentSnapshot data: " + marks1[0]+" "+marks2[0]);
+                                        internalMarks.add(new InternalMarksDesign(name, Integer.toString(roll), subjectCode, "0","0"));
                                         marksAdapter.notifyDataSetChanged();
 
                                     }
@@ -77,6 +104,17 @@ public class giveinternalmarks extends Fragment {
                         }
                     }
                 });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String beforeName = String.valueOf(marksAdapter.getItem(i).getTest1());
+
+                String changedName = "15";
+                marksAdapter.getItem(i).setTest1(changedName);
+                marksAdapter.notifyDataSetChanged();
+
+            }
+        });
 
         return view;
     }
