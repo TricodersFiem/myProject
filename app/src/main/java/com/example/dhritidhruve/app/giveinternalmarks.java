@@ -19,6 +19,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by Dhriti Dhruve on 05-04-2018.
@@ -30,7 +31,6 @@ public class giveinternalmarks extends Fragment {
     InternalMarksAdapter2 marksAdapter;
 
     String department, year, subjectName, subjectCode,name;
-   String[] marks1,marks2;
 
     View view;
     @Nullable
@@ -70,32 +70,14 @@ public class giveinternalmarks extends Fragment {
                                     String docs = document.getId();
                                     String temp = docs.split(" ")[0];
                                     if (temp.equals("STUDENT")) {
-                                        Student student = document.toObject(Student.class);
-                                        name = student.getName();
-
-                                        int roll = Integer.parseInt(student.getCollegeId().substring(student.getCollegeId().length()-3));
-                                        Log.i("roll",subjectCode);
-                                        FirebaseFirestore db2 = FirebaseFirestore.getInstance();
-                                        db2.collection("Person").document(document.getId()).collection("Subjects").document(subjectCode).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                if (task.isSuccessful()) {
-                                                    DocumentSnapshot document = task.getResult();
-                                                    if (document.exists()) {
-                                                        Log.i("TAG", "DocumentSnapshot data: " + document.getData());
-                                                        //marks1 = new String[0];
-                                                        //marks2 = new String[0];
-                                                        //marks1[0] = document.getData().get("internalMarks1").toString();
-                                                        //marks2[0] = document.getData().get("internalMarks2").toString();
-                                                        //Log.i("TAG2", "DocumentSnapshot data: " + marks1[0]+" "+marks2[0]);
-                                                        //internalMarks.add(new InternalMarksDesign(name, Integer.toString(roll), subjectCode, document.getData().get("internalMarks1").toString(), document.getData().get("internalMarks2").toString()));
-                                                        //marksAdapter.notifyDataSetChanged();
-                                                    }
-                                                }
-                                            }
-                                        });
-                                       // Log.i("TAG3", "DocumentSnapshot data: " + marks1[0]+" "+marks2[0]);
-                                        internalMarks.add(new InternalMarksDesign(name, Integer.toString(roll), subjectCode, "0","0"));
+                                        //Student student = document.toObject(Student.class);
+                                        //name = student.getName();
+                                        String r = document.getData().get("collegeId").toString();
+                                        int roll = Integer.parseInt(r.substring(r.length()-3));
+                                        //Log.i("myDoc","->"+document.getData());
+                                        Map<String,Object> values =  (Map<String,Object>)document.getData().get(subjectCode);
+                                        Log.i("val1",values.get("email").toString());
+                                        internalMarks.add(new InternalMarksDesign(document.getData().get("name").toString(),Integer.toString(roll),subjectCode,values.get("internalMarks1").toString(),values.get("internalMarks2").toString()));
                                         marksAdapter.notifyDataSetChanged();
 
                                     }
