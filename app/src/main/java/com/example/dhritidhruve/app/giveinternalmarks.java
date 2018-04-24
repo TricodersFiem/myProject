@@ -1,5 +1,6 @@
 package com.example.dhritidhruve.app;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -75,7 +78,8 @@ public class giveinternalmarks extends Fragment {
                                         String r = document.getData().get("collegeId").toString();
                                         int roll = Integer.parseInt(r.substring(r.length()-3));
                                         //Log.i("myDoc","->"+document.getData());
-                                        Map<String,Object> values =  (Map<String,Object>)document.getData().get(subjectCode);
+                                        Map<String, Object> myData = (Map<String,Object>)document.getData().get("Subjects");
+                                        Map<String,Object> values =  (Map<String,Object>)myData.get(subjectCode);
                                         Log.i("val1",values.get("email").toString());
                                         internalMarks.add(new InternalMarksDesign(document.getData().get("name").toString(),Integer.toString(roll),subjectCode,values.get("internalMarks1").toString(),values.get("internalMarks2").toString()));
                                         marksAdapter.notifyDataSetChanged();
@@ -89,6 +93,7 @@ public class giveinternalmarks extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                /*
                 String beforeName = String.valueOf(marksAdapter.getItem(i).getTest1());
                 String userName = String.valueOf(marksAdapter.getItem(i).getName());
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -118,11 +123,91 @@ public class giveinternalmarks extends Fragment {
                 String changedName = "15";
                 marksAdapter.getItem(i).setTest1(changedName);
                 marksAdapter.notifyDataSetChanged();
+                */
+                showInputBox(i);
 
             }
         });
 
         return view;
+    }
+    public void showInputBox(final int index){
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.setTitle("Input Marks");
+        dialog.setContentView(R.layout.input_box);
+        final EditText test1 = (EditText)dialog.findViewById(R.id.marks1);
+        final EditText test2 = (EditText)dialog.findViewById(R.id.marks2);
+        Button bt = (Button)dialog.findViewById(R.id.submit);
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(test1.getText().toString().length()>0){
+                    marksAdapter.getItem(index).setTest1(test1.getText().toString());
+                    updateDatabase1(index);
+                }
+                if(test2.getText().toString().length()>0) {
+                    marksAdapter.getItem(index).setTest2(test2.getText().toString());
+                    updateDatabase2(index);
+                }
+                marksAdapter.notifyDataSetChanged();
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+    }
+    public void updateDatabase1(final int i)
+    {
+        String userName = String.valueOf(marksAdapter.getItem(i).getName());
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Person").whereEqualTo("name",userName)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if (document.exists()) {
+                                    String docs = document.getId();
+                                    String temp = docs.split(" ")[0];
+                                    if (temp.equals("STUDENT")) {
+                                        FirebaseFirestore db2 = FirebaseFirestore.getInstance();
+                                        db2.collection("Person").document(document.getId()).update("Subjects."+subjectCode+".internalMarks1",Integer.parseInt(marksAdapter.getItem(i).getTest1()));
+
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void updateDatabase2(final int i)
+    {
+        String userName = String.valueOf(marksAdapter.getItem(i).getName());
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Person").whereEqualTo("name",userName)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if (document.exists()) {
+                                    String docs = document.getId();
+                                    String temp = docs.split(" ")[0];
+                                    if (temp.equals("STUDENT")) {
+                                        FirebaseFirestore db2 = FirebaseFirestore.getInstance();
+                                        db2.collection("Person").document(document.getId()).update("Subjects."+subjectCode+".internalMarks2",Integer.parseInt(marksAdapter.getItem(i).getTest1()));
+
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
     }
 
 }

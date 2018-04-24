@@ -48,7 +48,7 @@ public class SubjectAdd extends Fragment implements ExampleDialog.ExampleDialogL
         final Map<String,Object> myData = new HashMap<>();
 
         final Map<String,Object> subjectsStudent = new HashMap<>();
-
+        final Map<String,Object> mySubject = new HashMap<>();
         subjectsStudent.put("classAttended",10);
         subjectsStudent.put("email",user.getEmail());
         subjectsStudent.put("internalMarks1",0);
@@ -58,6 +58,7 @@ public class SubjectAdd extends Fragment implements ExampleDialog.ExampleDialogL
         subjectsStudent.put("totalClass",5);
 
         myData.put(subjectCode,subjectsStudent);
+        mySubject.put("Subjects",myData);
         //Add the collection Subjects with the subject Code document id to the students
         db.collection("Person")
                 .whereEqualTo("department",transferDepartment)
@@ -75,7 +76,7 @@ public class SubjectAdd extends Fragment implements ExampleDialog.ExampleDialogL
                                         //Log.d("msg",student.getPhotoId());
                                         db2 = FirebaseFirestore.getInstance();
                                         db2.collection("Person").document(document.getId())
-                                                .set(myData, SetOptions.merge());
+                                                .set(mySubject, SetOptions.merge());
                                                 /*
                                                 .collection("Subjects").document(subjectCode)
                                                 .set(subjectsStudent);*/
