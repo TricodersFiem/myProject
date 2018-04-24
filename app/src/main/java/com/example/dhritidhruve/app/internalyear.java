@@ -52,7 +52,7 @@ public class internalyear extends Fragment{
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                if (document.exists()&& !document.getId().equals("CS201")) {
+                                if (document.exists()) {
                                     Log.i("document",document.getId()+" -> "+document.getData());
                                     subjects.add(new SubjectDesign(document.getData().get("department").toString(),document.getData().get("year").toString(),document.getData().get("subjectName").toString(),document.getData().get("subjectCode").toString()));
                                     subjectAdapter.notifyDataSetChanged();
