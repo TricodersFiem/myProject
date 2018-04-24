@@ -16,7 +16,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.w3c.dom.Text;
 
@@ -25,7 +29,8 @@ import java.util.ArrayList;
 public class InternalMarksAdapter extends ArrayAdapter<InternalMarksDesign> {
     private Context context;
     private ArrayList<InternalMarksDesign> item;
-    FirebaseFirestore db;
+    FirebaseFirestore db,db2,db3;
+    int val1,val2;
 
     InternalMarksAdapter(Context context, ArrayList<InternalMarksDesign> item){
 
@@ -63,9 +68,29 @@ public class InternalMarksAdapter extends ArrayAdapter<InternalMarksDesign> {
         holder.enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int val1,val2;
+
                 val1 = Integer.parseInt(holder.test1View.getText().toString());
+
                 val2 = Integer.parseInt(holder.test1View.getText().toString());
+                db = FirebaseFirestore.getInstance();
+                db.collection("Person")
+                        .whereEqualTo("name",holder.nameTextView.getText().toString())
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        db2 = FirebaseFirestore.getInstance();
+                                        db2.collection("Person").document(document.getId()).collection("Subjects").document(holder.internalMarks.getSubjectCode()).update("internalMarks1",val1);
+                                        db3 = FirebaseFirestore.getInstance();
+                                        db3.collection("Person").document(document.getId()).collection("Subjects").document(holder.internalMarks.getSubjectCode()).update("internalMarks2",val2);
+
+                                        Log.i("docs", document.getId() + " => " + document.getData());
+                                    }
+                                }
+                            }
+                        });
                 holder.totalTextView.setText(String.valueOf(val1+val2));
             }
         });
