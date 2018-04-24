@@ -65,9 +65,9 @@ public class InternalMarksAdapter2 extends ArrayAdapter<InternalMarksDesign> {
         InternalMarksDesign person = getItem(position);
         holder.name.setText(person.getName());
         holder.roll.setText(person.getRoll());
-        holder.test1.setText(String.valueOf(person.getTest1()));
-        holder.test2.setText(String.valueOf(person.getTest2()));
-        holder.total.setText(String.valueOf(person.getTotal()));
+        holder.test1.setText(person.getTest1());
+        holder.test2.setText(person.getTest2());
+        holder.total.setText(person.getTotal());
 
 
         //holder.personImageView.setImageBitmap(person.getImage());

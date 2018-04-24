@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +45,10 @@ public class SubjectAdd extends Fragment implements ExampleDialog.ExampleDialogL
         dbStaff = FirebaseFirestore.getInstance();
         dbStaff.collection("Person").document("STAFF "+user.getEmail()).collection("Subjects").document(subjectCode).set(subjectsStaff);
 
+        final Map<String,Object> myData = new HashMap<>();
+
         final Map<String,Object> subjectsStudent = new HashMap<>();
+
         subjectsStudent.put("classAttended",10);
         subjectsStudent.put("email",user.getEmail());
         subjectsStudent.put("internalMarks1",0);
@@ -52,6 +56,8 @@ public class SubjectAdd extends Fragment implements ExampleDialog.ExampleDialogL
         subjectsStudent.put("subjectName",subjectName);
         subjectsStudent.put("subjectCode",subjectCode);
         subjectsStudent.put("totalClass",5);
+
+        myData.put(subjectCode,subjectsStudent);
         //Add the collection Subjects with the subject Code document id to the students
         db.collection("Person")
                 .whereEqualTo("department",transferDepartment)
@@ -69,8 +75,10 @@ public class SubjectAdd extends Fragment implements ExampleDialog.ExampleDialogL
                                         //Log.d("msg",student.getPhotoId());
                                         db2 = FirebaseFirestore.getInstance();
                                         db2.collection("Person").document(document.getId())
+                                                .set(myData, SetOptions.merge());
+                                                /*
                                                 .collection("Subjects").document(subjectCode)
-                                                .set(subjectsStudent);
+                                                .set(subjectsStudent);*/
                                     }
                                 }
                             }
@@ -108,7 +116,7 @@ public class SubjectAdd extends Fragment implements ExampleDialog.ExampleDialogL
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                if (document.exists()&& !document.getId().equals("CS201")) {
+                                if (document.exists()) {
                                     Log.i("document",document.getId()+" -> "+document.getData());
                                     subjects.add(new SubjectDesign(document.getData().get("department").toString(),document.getData().get("year").toString(),document.getData().get("subjectName").toString(),document.getData().get("subjectCode").toString()));
                                     subjectAdapter.notifyDataSetChanged();
