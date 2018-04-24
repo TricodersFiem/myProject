@@ -44,7 +44,7 @@ public class checkattendance extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (document.exists()) {
                                     Log.i("document",document.getId()+" -> "+document.getData());
-                                    StudentAttendanceDesign.add(new studentAttendanceDesign(document.getData().get("subjectCode").toString(),document.getData().get("test1").toString(),document.getData().get("test2").toString(),document.getData().get("total").toString()));
+                                    StudentAttendanceDesign.add(new studentAttendanceDesign(document.getData().get("subjectCode").toString(),document.getData().get("classAttended").toString(),document.getData().get("totalClass").toString(),document.getData().get("total").toString()));
                                     StudentAdapter.notifyDataSetChanged();
                                 }
                             }

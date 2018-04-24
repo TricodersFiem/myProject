@@ -26,13 +26,14 @@ public class notice extends Fragment {
         View contenedor = (View)container.getParent();
         appBar = (AppBarLayout)contenedor.findViewById(R.id.appbar);
         tabs = new TabLayout(getActivity());
-        tabs.setTabTextColors(Color.parseColor("#FFFFFF"), Color.parseColor("#FFFFFF"));
+        tabs.setTabTextColors(Color.parseColor("#800000"), Color.parseColor("#0000FF"));
         appBar.addView(tabs);
 
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         tabs.setupWithViewPager(viewPager);
+        tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
        return view;
     }
 

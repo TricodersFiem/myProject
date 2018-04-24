@@ -44,7 +44,7 @@ public class checkinternalmarks extends Fragment {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     if (document.exists()) {
                                         Log.i("document",document.getId()+" -> "+document.getData());
-                                        StudentInternal.add(new studentInternalDesign(document.getData().get("subjectCode").toString(),document.getData().get("internalMarks1").toString(),document.getData().get("test2").toString(),document.getData().get("total").toString()));
+                                        StudentInternal.add(new studentInternalDesign(document.getData().get("subjectCode").toString(),document.getData().get("internalMarks1").toString(),document.getData().get("internalMarks2").toString(),document.getData().get("total").toString()));
                                         studentAdapter.notifyDataSetChanged();
                                     }
                                 }
