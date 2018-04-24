@@ -20,6 +20,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class checkinternalmarks extends Fragment {
 
@@ -44,26 +45,17 @@ public class checkinternalmarks extends Fragment {
                             if (task.isSuccessful()) {
                                 DocumentSnapshot document = task.getResult();
                                 if (document.exists()) {
-                                    Log.i("TAG", "DocumentSnapshot data: " + document.getData());
-                                }
-                            }
-                        }
-                    });
-            /*
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    if (document.exists()) {
-                                        Log.i("document",document.getId()+" -> "+document.getData());
-                                        StudentInternal.add(new studentInternalDesign(document.getData().get("subjectCode").toString(),document.getData().get("internalMarks1").toString(),document.getData().get("internalMarks2").toString(),document.getData().get("total").toString()));
+                                    Map<String,Object> subjects =(Map<String, Object>) document.getData().get("Subjects");
+                                    for(Map.Entry<String,Object> subj: subjects.entrySet()){
+                                        Map<String,Object> values = (Map<String,Object>)subj.getValue();
+                                        StudentInternal.add(new studentInternalDesign(values.get("subjectCode").toString(),values.get("internalMarks1").toString(),values.get("internalMarks2").toString()));
                                         studentAdapter.notifyDataSetChanged();
                                     }
                                 }
                             }
                         }
-                    });*/
+                    });
+
         listView.setAdapter(studentAdapter);
 
 
@@ -71,7 +63,7 @@ public class checkinternalmarks extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_checkinternalmarks, container, false);
-        getActivity().setTitle("CHECK INTERNAL MARKS ");
+        getActivity().setTitle("Check Internal Marks");
         return view;
     }
 }

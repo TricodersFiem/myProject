@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class studentInternalAdapter extends ArrayAdapter<studentInternalDesign> {
     private Context context;
-    private ArrayList<studentInternalDesign> item;
+    private ArrayList<studentInternalDesign> item = new ArrayList<studentInternalDesign>();
 
     studentInternalAdapter(Context context, ArrayList<studentInternalDesign> item){
         super(context, 0, item);
@@ -27,27 +27,56 @@ public class studentInternalAdapter extends ArrayAdapter<studentInternalDesign> 
     TextView test1View,test2View,totalTextView,subjectCode;
     studentInternalDesign internalMarks;
 
+    @Override
+    public void add(studentInternalDesign object) {
+        item.add(object);
+        super.add(object);
+    }
+
+    public int getCount() {
+        return this.item.size();
+    }
+
+    static class ViewHolder {
+        private TextView totalTextView,test1View,test2View,subjectCode;
+    }
+
     @SuppressLint("ViewHolder")
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        ViewHolder holder;
         //Check if the existing view is being reused, otherwise inflate the view
-        View listItemView = convertView;
+        if (convertView == null) {
         LayoutInflater inflator = ((Activity)context).getLayoutInflater();
-        listItemView = inflator.inflate(R.layout.linear_layout_studentinternalmarks, parent,false);
+        convertView = inflator.inflate(R.layout.linear_layout_studentinternalmarks, parent,false);
+        holder = new ViewHolder();
 
-        internalMarks = item.get(position);
-        totalTextView = (TextView) listItemView.findViewById(R.id.total);
-        test1View = (TextView) listItemView.findViewById(R.id.test1);
-        test2View = (TextView) listItemView.findViewById(R.id.test2);
-        subjectCode = (TextView)listItemView.findViewById(R.id.subjCode);
+        holder.totalTextView = (TextView) convertView.findViewById(R.id.total);
+        holder.test1View = (TextView) convertView.findViewById(R.id.test1);
+        holder.test2View = (TextView) convertView.findViewById(R.id.test2);
+        holder.subjectCode = (TextView)convertView.findViewById(R.id.subjectCode);
+            convertView.setTag(holder);
+        }
+        else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+        studentInternalDesign person = getItem(position);
+            internalMarks = item.get(position);
 
-        totalTextView.setText(internalMarks.getTotal());
-        subjectCode.setText(internalMarks.getSubjectCode());
-        test1View.setText(internalMarks.getTest1());
-        test2View.setText(internalMarks.getTest2());
+        /*
+        holder.totalTextView.setText("25");
+        holder.subjectCode.setText("M101");
+        holder.test1View.setText("1");
+        holder.test2View.setText("2");
+        */
 
-        return listItemView;
+        holder.totalTextView.setText(internalMarks.getTotal());
+        holder.subjectCode.setText(internalMarks.getSubjectCode());
+        holder.test1View.setText(internalMarks.getTest1());
+        holder.test2View.setText(internalMarks.getTest2());
+
+        return convertView;
 
     }
 }
