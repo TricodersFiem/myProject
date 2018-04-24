@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
-            android:descendantFocusability="beforeDescendants"
+            android:descendantFocusability="afterDescendants"
             android:padding="10dp" />
 
     </LinearLayout>

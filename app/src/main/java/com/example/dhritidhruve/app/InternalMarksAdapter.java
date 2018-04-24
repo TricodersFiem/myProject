@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -21,7 +24,7 @@ import java.util.ArrayList;
 public class InternalMarksAdapter extends ArrayAdapter<InternalMarksDesign> {
     private Context context;
     private ArrayList<InternalMarksDesign> item;
-
+    FirebaseFirestore db;
 
     InternalMarksAdapter(Context context, ArrayList<InternalMarksDesign> item){
 
@@ -82,13 +85,17 @@ public class InternalMarksAdapter extends ArrayAdapter<InternalMarksDesign> {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.toString().length()>0)
-                    holder.internalMarks.setTest1(Integer.parseInt(s.toString()));
+                if(s.toString().length()>0){
+                    db = FirebaseFirestore.getInstance();
+
+                }
+
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                Log.i("sc",holder.internalMarks.getSubjectCode());
                /* if (s.toString().length() > 0) {
                     holder.internalMarks.setTest1(Integer.parseInt(s.toString()));
                     holder.internalMarks.setTest2(Integer.parseInt(s.toString()));

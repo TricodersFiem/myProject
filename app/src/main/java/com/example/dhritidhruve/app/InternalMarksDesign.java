@@ -41,7 +41,7 @@ public class InternalMarksDesign {
     public void setTotal(int data){
         test2 = data;
     }
-
+    public String getSubjectCode(){return subjectCode;}
     public int getTest1(){ return test1;}
 
     public int getTotal(){ return test1+test2;}
