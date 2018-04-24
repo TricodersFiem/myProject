@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -37,6 +38,7 @@ public class InternalMarksAdapter extends ArrayAdapter<InternalMarksDesign> {
     public static class ViewHolder{
         EditText test1View,test2View;
         TextView rollTextView, nameTextView, totalTextView;
+        Button enter;
         InternalMarksDesign internalMarks;
     }
 
@@ -46,7 +48,7 @@ public class InternalMarksAdapter extends ArrayAdapter<InternalMarksDesign> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         //Check if the existing view is being reused, otherwise inflate the view
         View listItemView = convertView;
-        ViewHolder holder = new ViewHolder();
+        final ViewHolder holder = new ViewHolder();
         LayoutInflater inflator = ((Activity)context).getLayoutInflater();
         listItemView = inflator.inflate(R.layout.linear_layout_internal_marks, parent,false);
 
@@ -56,9 +58,19 @@ public class InternalMarksAdapter extends ArrayAdapter<InternalMarksDesign> {
         holder.totalTextView = (TextView) listItemView.findViewById(R.id.total);
         holder.test1View = (EditText) listItemView.findViewById(R.id.test1);
         holder.test2View = (EditText) listItemView.findViewById(R.id.test2);
+        holder.enter = (Button)listItemView.findViewById(R.id.submit);
 
-        setTest1ViewTextChangeListener(holder);
-        setTest2ViewTextChangeListener(holder);
+        holder.enter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int val1,val2;
+                val1 = Integer.parseInt(holder.test1View.getText().toString());
+                val2 = Integer.parseInt(holder.test1View.getText().toString());
+                holder.totalTextView.setText(String.valueOf(val1+val2));
+            }
+        });
+
+
 
         listItemView.setTag(holder);
 
@@ -76,63 +88,6 @@ public class InternalMarksAdapter extends ArrayAdapter<InternalMarksDesign> {
         holder.rollTextView.setText(holder.internalMarks.getRoll());
     }
 
-    private void setTest1ViewTextChangeListener(final ViewHolder holder){
-        holder.test1View.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.toString().length()>0){
-                    db = FirebaseFirestore.getInstance();
-
-                }
-
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                Log.i("sc",holder.internalMarks.getSubjectCode());
-               /* if (s.toString().length() > 0) {
-                    holder.internalMarks.setTest1(Integer.parseInt(s.toString()));
-                    holder.internalMarks.setTest2(Integer.parseInt(s.toString()));
-                    int val1 = Integer.parseInt(holder.test1View.getText().toString());
-                    int val2 = Integer.parseInt(holder.test2View.getText().toString());
-                    holder.internalMarks.setTotal(val1 + val2);
-                    holder.totalTextView.setText(String.valueOf(val1 + val2));
-                }*/
-            }
-        });
-    }
-
-    private void setTest2ViewTextChangeListener(final ViewHolder holder){
-        holder.test2View.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.toString().length()>0)
-                    holder.internalMarks.setTest2(Integer.parseInt(s.toString()));
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.toString().length() > 0) {
-                    holder.internalMarks.setTest1(Integer.parseInt(s.toString()));
-                    holder.internalMarks.setTest2(Integer.parseInt(s.toString()));
-                    int val1 = Integer.parseInt(holder.test1View.getText().toString());
-                    int val2 = Integer.parseInt(holder.test2View.getText().toString());
-                    holder.internalMarks.setTotal(val1 + val2);
-                    holder.totalTextView.setText(String.valueOf(val1 + val2));
-                }
-            }
-        });
-    }
 
 }
