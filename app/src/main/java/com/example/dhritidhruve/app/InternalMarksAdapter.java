@@ -91,7 +91,8 @@ public class InternalMarksAdapter extends ArrayAdapter<InternalMarksDesign> {
                                 }
                             }
                         });
-                holder.totalTextView.setText(String.valueOf(val1+val2));
+                db3 = FirebaseFirestore.getInstance();
+
             }
         });
 

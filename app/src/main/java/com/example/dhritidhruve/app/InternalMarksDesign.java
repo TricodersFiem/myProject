@@ -27,6 +27,7 @@ public class InternalMarksDesign {
         subjectCode = SubjectCode;
     }
 
+
     public String getName(){ return name;}
 
     public String getRoll(){ return roll;}
