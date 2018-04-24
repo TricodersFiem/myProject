@@ -13,36 +13,58 @@ import java.util.ArrayList;
 
 public class studentAtendanceAdapter extends ArrayAdapter<studentAttendanceDesign> {
     private Context context;
-    private ArrayList<studentAttendanceDesign> item;
+    private ArrayList<studentAttendanceDesign> item = new ArrayList<studentAttendanceDesign>();
 
     studentAtendanceAdapter(Context context, ArrayList<studentAttendanceDesign> item){
         super(context, 0, item);
         this.context = context;
         this.item = item;
     }
-    TextView attendedclasses,totalclasses,percent,subjectCode;
+
+    @Override
+    public void add(studentAttendanceDesign object) {
+        item.add(object);
+        super.add(object);
+    }
+
+    public int getCount() {
+        return this.item.size();
+    }
+
+    static class ViewHolder {
+        TextView attendedclasses, totalclasses, percent, subjectCode;
+    }
     studentAttendanceDesign attendance;
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        //Check if the existing view is being reused, otherwise inflate the view
-        View listItemView = convertView;
+
+        ViewHolder holder;
+
+        if (convertView == null) {
         LayoutInflater inflator = ((Activity)context).getLayoutInflater();
-        listItemView = inflator.inflate(R.layout.linear_layout_studentattendance, parent,false);
+        convertView = inflator.inflate(R.layout.linear_layout_studentattendance, parent,false);
+            holder = new ViewHolder();
 
+
+        holder.percent = (TextView) convertView.findViewById(R.id.percent);
+        holder.attendedclasses = (TextView) convertView.findViewById(R.id.classesattended);
+        holder.totalclasses = (TextView) convertView.findViewById(R.id.totalclasses);
+        holder.subjectCode = (TextView)convertView.findViewById(R.id.subjectCode);
+
+            convertView.setTag(holder);
+        }
+        else {
+            holder = (ViewHolder) convertView.getTag();
+        }
         attendance = item.get(position);
-        percent = (TextView) listItemView.findViewById(R.id.percent);
-        attendedclasses = (TextView) listItemView.findViewById(R.id.classesattended);
-        totalclasses = (TextView) listItemView.findViewById(R.id.totalclasses);
-        subjectCode = (TextView)listItemView.findViewById(R.id.subjCode);
+        holder.percent.setText(attendance.getPercent());
+        holder.subjectCode.setText(attendance.getSubjectCode());
+        holder.attendedclasses.setText(attendance.getClassesattended());
+        holder.totalclasses.setText(attendance.getTotalclasses());
 
-        percent.setText(attendance.getPercent());
-        subjectCode.setText(attendance.getSubjectCode());
-        attendedclasses.setText(attendance.getClassesattended());
-        totalclasses.setText(attendance.getTotalclasses());
-
-        return listItemView;
+        return convertView;
 
     }
 }

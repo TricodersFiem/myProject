@@ -24,7 +24,6 @@ public class studentInternalAdapter extends ArrayAdapter<studentInternalDesign> 
         this.context = context;
         this.item = item;
     }
-    TextView test1View,test2View,totalTextView,subjectCode;
     studentInternalDesign internalMarks;
 
     @Override
@@ -46,7 +45,7 @@ public class studentInternalAdapter extends ArrayAdapter<studentInternalDesign> 
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         ViewHolder holder;
-        //Check if the existing view is being reused, otherwise inflate the view
+
         if (convertView == null) {
         LayoutInflater inflator = ((Activity)context).getLayoutInflater();
         convertView = inflator.inflate(R.layout.linear_layout_studentinternalmarks, parent,false);
