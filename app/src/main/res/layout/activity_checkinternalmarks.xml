@@ -21,6 +21,7 @@
             android:layout_height="34dp"
             android:orientation="horizontal"
             tools:ignore="MissingConstraints"
+            android:background="?android:attr/colorControlHighlight"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="38dp">
 
