@@ -49,6 +49,7 @@
                 android:text="INTERNAL 2"
                 android:textAlignment="center" />
 
+            
             <TextView
                 android:id="@+id/total"
                 android:layout_width="wrap_content"
